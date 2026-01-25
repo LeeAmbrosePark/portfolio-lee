@@ -86,7 +86,7 @@ export default function ArmyPage() {
             </div>
             <div className="hidden md:block text-right">
                 <div className="text-xs text-neutral-600">STATUS</div>
-                <div className="text-white text-xs">ACTIVE // U.S. ARMY</div>
+                <div className="text-white text-xs">ACTIVE DUTY // U.S. ARMY</div>
             </div>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function ArmyPage() {
         <div className="flex items-center gap-4 mb-8">
             <div className="w-2 h-2 bg-white"></div>
             <h2 className="text-sm text-white font-bold uppercase tracking-widest">
-                Primary Architecture: C.U.L.T. Manager
+                Primary Architecture: The Transformation of the Army's Common User Land Transportation (C.U.L.T.) Manager
             </h2>
         </div>
         
@@ -121,7 +121,13 @@ export default function ArmyPage() {
                 <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg">
                     <h3 className="text-white text-xs font-bold uppercase mb-2">The Solution</h3>
                     <p className="text-xs text-neutral-500 leading-relaxed">
-                        API integration between OMNI Loadout and Palantir Vantage. The system queries the "Golden Record" (fused GCSS-A/IPPS-A data) to validate feasibility before a mission is accepted.
+                        API integration between the Army's (Omni AI) Loadout and Palantir Vantage. The system queries what I describe as the "Golden Record" (fused GCSS-A/IPPS-A data) to validate feasibility before a mission is accepted.
+                    </p>
+                </div>
+                <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg">
+                    <h3 className="text-white text-xs font-bold uppercase mb-2">Deep Dive: Data Ontology</h3>
+                    <p className="text-xs text-neutral-500 leading-relaxed">
+                        The core achievement of CULT is not just the interface, but the underlying ontology. By linking disparate data objects—specifically the Equipment Status Report (ESR) from GCSS-Army and Personnel Records (Sanitized) from IPPS-A—I will create a live "Feasibility Index." This allows commanders to see not just <i>if</i> a truck is available, but if a <i>qualified</i> driver is present to operate it, removing the guesswork from movement planning.
                     </p>
                 </div>
             </div>
@@ -140,15 +146,21 @@ export default function ArmyPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             
             {/* PROJECT: ARC */}
-            <div className="group cursor-pointer">
-                <div className="relative aspect-video bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden mb-6 hover:border-white transition-colors">
-                    <Image 
-                        src="/arc-dashboard.png" 
-                        alt="Ammunition & Range Coordinator Dashboard" 
-                        fill
-                        className="object-cover opacity-60 group-hover:opacity-100 transition-opacity grayscale"
-                    />
-                </div>
+            <div className="group">
+                {/* Wrapped in Link to open Full Size in New Tab */}
+                <Link href="/arc-dashboard.png" target="_blank">
+                    <div className="relative aspect-video bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden mb-6 hover:border-white transition-colors cursor-zoom-in">
+                        <Image 
+                            src="/arc-dashboard.png" 
+                            alt="Ammunition & Range Coordinator Dashboard" 
+                            fill
+                            className="object-cover" // Removed grayscale, added full color
+                        />
+                        <div className="absolute bottom-2 right-2 bg-black/80 px-2 py-1 text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                            CLICK TO EXPAND ↗
+                        </div>
+                    </div>
+                </Link>
                 <h3 className="text-white font-bold text-lg mb-2">ARC: Ammunition & Range Coordinator</h3>
                 <div className="flex gap-2 mb-4">
                     <span className="text-[10px] bg-black text-neutral-500 px-2 py-1 border border-neutral-800">POWER BI</span>
@@ -160,23 +172,28 @@ export default function ArmyPage() {
             </div>
 
             {/* PROJECT: CAL-C */}
-            <div className="group cursor-pointer">
-                <div className="relative aspect-video bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden mb-6 hover:border-white transition-colors">
-                    {/* UPDATED TO .png */}
-                    <Image 
-                        src="/calc-dashboard.png" 
-                        alt="CAL-C Dashboard" 
-                        fill
-                        className="object-cover opacity-60 group-hover:opacity-100 transition-opacity grayscale"
-                    />
-                </div>
+            <div className="group">
+                 {/* Wrapped in Link to open Full Size in New Tab */}
+                 <Link href="/calc-dashboard.png" target="_blank">
+                    <div className="relative aspect-video bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden mb-6 hover:border-white transition-colors cursor-zoom-in">
+                        <Image 
+                            src="/calc-dashboard.png" 
+                            alt="CAL-C Dashboard" 
+                            fill
+                            className="object-cover" // Removed grayscale, added full color
+                        />
+                         <div className="absolute bottom-2 right-2 bg-black/80 px-2 py-1 text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                            CLICK TO EXPAND ↗
+                        </div>
+                    </div>
+                </Link>
                 <h3 className="text-white font-bold text-lg mb-2">CAL-C: Container Asset Logistics Calculator</h3>
                 <div className="flex gap-2 mb-4">
                     <span className="text-[10px] bg-black text-neutral-500 px-2 py-1 border border-neutral-800">PREDICTIVE MODELING</span>
                     <span className="text-[10px] bg-black text-neutral-500 px-2 py-1 border border-neutral-800">ASSET UTILIZATION</span>
                 </div>
                 <p className="text-xs text-neutral-500 leading-relaxed max-w-md">
-                    A predictive modeling engine for containerized movement. Calculates "Slack Time" and feasibility based on Material Handling Equipment (MHE) throughput, node processing factors, and drive-time limitations. Provides a binary GO/NO-GO for mission planners.
+                    A predictive modeling engine for containerized movement. Showcased in Jan-26 Power BI for All competition @Department of War. Calculates "Slack Time" and feasibility based on Material Handling Equipment (MHE) throughput, node processing factors, and drive-time limitations. Provides a binary GO/NO-GO for mission planners.
                 </p>
             </div>
 
@@ -188,7 +205,7 @@ export default function ArmyPage() {
         <div className="flex items-center gap-4 mb-12">
             <div className="w-2 h-2 bg-neutral-800"></div>
             <h2 className="text-sm text-white font-bold uppercase tracking-widest">
-                Deployment History
+                MILITARY TIMELINE
             </h2>
         </div>
 
@@ -211,10 +228,10 @@ export default function ArmyPage() {
                 <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-black border border-neutral-600 rounded-full"></div>
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
                     <h4 className="text-white font-bold">Platoon Leader / Executive Officer</h4>
-                    <span className="text-[10px] font-mono text-neutral-600">VARIOUS UNITS // 2023 - 2025</span>
+                    <span className="text-[10px] font-mono text-neutral-600">VARIOUS UNITS // 2022 - 2025</span>
                 </div>
                 <p className="text-xs text-neutral-500 max-w-2xl">
-                    Direct leadership of logistics formations. Developed initial Power BI tools to solve immediate tactical friction points in field environments.
+                    Direct leadership of logistics formations. Developed my first Power BI tools to solve immediate friction points in field environments.
                 </p>
             </div>
 

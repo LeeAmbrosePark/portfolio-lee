@@ -9,7 +9,7 @@ export default function Home() {
       <header className="border-b border-neutral-800 p-6 flex justify-between items-center text-[10px] tracking-widest uppercase text-neutral-500">
         <div>Lee_Ambrose_Park // Portfolio_v1.0</div>
         <div className="flex gap-6">
-          <span>Loc: U.S.A.</span>
+          <span>Born and Raised: CALIFORNIA_USA</span>
           <span className="text-white animate-pulse">● System_Online</span>
         </div>
       </header>
@@ -20,12 +20,13 @@ export default function Home() {
         <div className="mb-16 flex flex-col md:flex-row gap-12 items-center md:items-start">
           
           {/* PROFILE PHOTO */}
+          {/* Added 'object-top' to fix cropping */}
           <div className="relative w-40 h-40 md:w-56 md:h-56 shrink-0 rounded-full overflow-hidden border-2 border-neutral-800 group">
             <Image 
               src="/my-photo.jpg" 
               alt="Lee Ambrose Park"
               fill
-              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+              className="object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500"
               priority
             />
           </div>
@@ -33,11 +34,14 @@ export default function Home() {
           {/* HEADLINE TEXT */}
           <div className="flex flex-col justify-center h-full pt-4">
             <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-6">
-              LOGISTICS <span className="text-neutral-600">X</span> DATA
+              LOGISTICS OFFICER <span className="text-neutral-600">X</span> DATA
             </h1>
-            <p className="text-sm md:text-lg text-neutral-400 max-w-2xl leading-relaxed">
+            <p className="text-sm md:text-lg text-neutral-400 max-w-3xl leading-relaxed">
               Bridging the tactical edge with systems architecture. <br/>
-              U.S. Army Logistics Officer & Georgetown Supply Chain Master's Candidate.
+              U.S. Army Logistics Officer & Georgetown Supply Chain Master's Candidate. <br/>
+              <span className="text-neutral-500 block mt-2">
+                // Aiming for (MBA at UCLA Anderson) no later than 2027.
+              </span>
             </p>
           </div>
         </div>
@@ -78,10 +82,10 @@ export default function Home() {
               
               <div>
                 <h2 className="text-3xl font-bold mb-2 group-hover:text-black transition-colors">
-                  ACADEMIC RIGOR
+                  ACADEMIC 
                 </h2>
                 <p className="text-xs text-neutral-500 group-hover:text-neutral-800 transition-colors max-w-xs">
-                  Currently working on: Automated Feasibility Analysis (C.U.L.T.).
+                  Georgetown University MPS. Capstone: Automated Feasibility Analysis (C.U.L.T. Report for the Modern Warfighter).
                 </p>
               </div>
             </div>
