@@ -1,6 +1,8 @@
+'use client';
+
 import Link from 'next/link';
-import Image from 'next/image';
 import Mermaid from '@/components/Mermaid';
+import DashboardViewer from '@/components/DashboardViewer';
 
 // MONOCHROME / HIGH-CONTRAST BLUEPRINT
 const cultBlueprint = `
@@ -65,178 +67,149 @@ flowchart TD
     class note1 note;
 `;
 
+const DASHBOARDS = [
+    {
+        id: 'arc',
+        title: 'ARC: Ammunition & Range Coordinator',
+        description: 'Automated the calculation of Class V requirements for weapon qualification ranges. Inputs: Density of soldiers and Weapon System (M4, M249, etc.). Outputs: Exact DODIC requirements, regulatory compliance checks, and range site selection validation.',
+        imageSrc: '/arc-dashboard.png',
+        tags: ['POWER BI', 'LOGISTICS ESTIMATION', 'AUTOMATION']
+    },
+    {
+        id: 'calc',
+        title: 'CAL-C: Container Asset Logistics Calculator',
+        description: 'A predictive modeling engine for containerized movement. Showcased in Jan-26 Power BI for All competition @Department of War. Calculates "Slack Time" and feasibility based on Material Handling Equipment (MHE) throughput, node processing factors, and drive-time limitations. Provides a binary GO/NO-GO for mission planners.',
+        imageSrc: '/calc-dashboard.png',
+        tags: ['PREDICTIVE MODELING', 'ASSET UTILIZATION', 'DECISION SUPPORT']
+    }
+];
+
 export default function ArmyPage() {
-  return (
-    <div className="min-h-screen bg-black text-slate-300 font-mono selection:bg-white/20">
-      
-      {/* HEADER SECTION */}
-      <div className="max-w-7xl mx-auto p-8 md:p-12 border-b border-neutral-800">
-        <div className="flex justify-between items-start">
-            <div>
-                <Link href="/" className="text-[10px] text-neutral-500 hover:text-white uppercase tracking-widest mb-6 inline-block transition-colors">
-                    // RETURN_ROOT
-                </Link>
-                <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4">
-                  OPERATIONAL LOGISTICS
-                </h1>
-                <p className="text-sm text-neutral-500 max-w-xl uppercase tracking-wide">
-                  Systems architecture for sustainment operations. <br/>
-                  Focus: Automation, Predictive Modeling, and Asset Visibility.
-                </p>
-            </div>
-            <div className="hidden md:block text-right">
-                <div className="text-xs text-neutral-600">STATUS</div>
-                <div className="text-white text-xs">ACTIVE DUTY // U.S. ARMY</div>
-            </div>
-        </div>
-      </div>
+    return (
+        <div className="min-h-screen bg-black text-slate-300 font-mono selection:bg-green-500/30">
 
-      {/* SECTION 1: THE ARCHITECTURE (CULT) */}
-      <section className="max-w-7xl mx-auto p-8 md:p-12">
-        <div className="flex items-center gap-4 mb-8">
-            <div className="w-2 h-2 bg-white"></div>
-            <h2 className="text-sm text-white font-bold uppercase tracking-widest">
-                Primary Architecture: The Transformation of the Army's Common User Land Transportation (C.U.L.T.) Manager
-            </h2>
-        </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-            <div className="lg:col-span-2 bg-black border border-neutral-800 rounded-lg p-6 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-4 opacity-50">
-                    <span className="text-[10px] border border-neutral-800 px-2 py-1 text-neutral-500">VANTAGE_ONTOLOGY_V1.2</span>
-                </div>
-                {/* INVERT FILTER: Makes the diagram crisp white on black */}
-                <div className="mt-8 overflow-x-auto grayscale invert-0">
-                    <Mermaid chart={cultBlueprint} />
+            {/* HEADER SECTION */}
+            <div className="max-w-7xl mx-auto p-8 md:p-12 border-b border-neutral-800">
+                <div className="flex justify-between items-start">
+                    <div>
+                        <Link href="/" className="text-[10px] text-neutral-500 hover:text-white uppercase tracking-widest mb-6 inline-block transition-colors hover:translate-x-1 duration-300">
+                            {'<'} RETURN_ROOT
+                        </Link>
+                        <div className="flex items-center gap-3 mb-2">
+                            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            <p className="text-xs text-green-500 uppercase tracking-widest">
+                                System_Online // US_Army_Logistics
+                            </p>
+                        </div>
+                        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4">
+                            OPERATIONAL LOGISTICS
+                        </h1>
+                        <p className="text-sm text-neutral-500 max-w-xl uppercase tracking-wide">
+                            Systems architecture for sustainment operations. <br />
+                            Focus: Automation, Predictive Modeling, and Asset Visibility.
+                        </p>
+                    </div>
+                    <div className="hidden md:block text-right">
+                        <div className="text-xs text-neutral-600">STATUS</div>
+                        <div className="text-white text-xs">ACTIVE DUTY // U.S. ARMY</div>
+                    </div>
                 </div>
             </div>
 
-            <div className="space-y-6">
-                <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg">
-                    <h3 className="text-white text-xs font-bold uppercase mb-2">The Problem Set</h3>
-                    <p className="text-xs text-neutral-500 leading-relaxed">
-                        Disconnect between Demand (Loadout) and Supply (GCSS-A). Manual validation of TMRs leads to "Ghost Truck" scheduling—missions planned against non-mission capable assets.
-                    </p>
+            {/* SECTION 1: THE ARCHITECTURE (CULT) */}
+            <section className="max-w-7xl mx-auto p-8 md:p-12">
+                <div className="flex items-center gap-4 mb-8">
+                    <div className="w-2 h-2 bg-white"></div>
+                    <h2 className="text-sm text-white font-bold uppercase tracking-widest">
+                        Primary Architecture: The Transformation of the Army's Common User Land Transportation (C.U.L.T.) Manager
+                    </h2>
                 </div>
-                <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg">
-                    <h3 className="text-white text-xs font-bold uppercase mb-2">The Solution</h3>
-                    <p className="text-xs text-neutral-500 leading-relaxed">
-                        API integration between the Army's (Omni AI) Loadout and Palantir Vantage. The system queries what I describe as the "Golden Record" (fused GCSS-A/IPPS-A data) to validate feasibility before a mission is accepted.
-                    </p>
-                </div>
-                <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg">
-                    <h3 className="text-white text-xs font-bold uppercase mb-2">Deep Dive: Data Ontology</h3>
-                    <p className="text-xs text-neutral-500 leading-relaxed">
-                        The core achievement of CULT is not just the interface, but the underlying ontology. By linking disparate data objects—specifically the Equipment Status Report (ESR) from GCSS-Army and Personnel Records (Sanitized) from IPPS-A—I will create a live "Feasibility Index." This allows commanders to see not just <i>if</i> a truck is available, but if a <i>qualified</i> driver is present to operate it, removing the guesswork from movement planning.
-                    </p>
-                </div>
-            </div>
-        </div>
-      </section>
 
-      {/* SECTION 2: TACTICAL TOOLSET (ARC & CAL-C) */}
-      <section className="max-w-7xl mx-auto p-8 md:p-12 border-t border-neutral-800">
-        <div className="flex items-center gap-4 mb-12">
-            <div className="w-2 h-2 bg-neutral-600"></div>
-            <h2 className="text-sm text-white font-bold uppercase tracking-widest">
-                Tactical Toolset (Power BI)
-            </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            
-            {/* PROJECT: ARC */}
-            <div className="group">
-                {/* Wrapped in Link to open Full Size in New Tab */}
-                <Link href="/arc-dashboard.png" target="_blank">
-                    <div className="relative aspect-video bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden mb-6 hover:border-white transition-colors cursor-zoom-in">
-                        <Image 
-                            src="/arc-dashboard.png" 
-                            alt="Ammunition & Range Coordinator Dashboard" 
-                            fill
-                            className="object-cover" // Removed grayscale, added full color
-                        />
-                        <div className="absolute bottom-2 right-2 bg-black/80 px-2 py-1 text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                            CLICK TO EXPAND ↗
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <div className="lg:col-span-2 bg-black border border-neutral-800 rounded-lg p-6 relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-4 opacity-50">
+                            <span className="text-[10px] border border-neutral-800 px-2 py-1 text-neutral-500">VANTAGE_ONTOLOGY_V1.2</span>
+                        </div>
+                        {/* INVERT FILTER: Makes the diagram crisp white on black */}
+                        <div className="mt-8 overflow-x-auto grayscale invert-0">
+                            <Mermaid chart={cultBlueprint} />
                         </div>
                     </div>
-                </Link>
-                <h3 className="text-white font-bold text-lg mb-2">ARC: Ammunition & Range Coordinator</h3>
-                <div className="flex gap-2 mb-4">
-                    <span className="text-[10px] bg-black text-neutral-500 px-2 py-1 border border-neutral-800">POWER BI</span>
-                    <span className="text-[10px] bg-black text-neutral-500 px-2 py-1 border border-neutral-800">LOGISTICS ESTIMATION</span>
-                </div>
-                <p className="text-xs text-neutral-500 leading-relaxed max-w-md">
-                    Automated the calculation of Class V requirements for weapon qualification ranges. Inputs: Density of soldiers and Weapon System (M4, M249, etc.). Outputs: Exact DODIC requirements, regulatory compliance checks, and range site selection validation.
-                </p>
-            </div>
 
-            {/* PROJECT: CAL-C */}
-            <div className="group">
-                 {/* Wrapped in Link to open Full Size in New Tab */}
-                 <Link href="/calc-dashboard.png" target="_blank">
-                    <div className="relative aspect-video bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden mb-6 hover:border-white transition-colors cursor-zoom-in">
-                        <Image 
-                            src="/calc-dashboard.png" 
-                            alt="CAL-C Dashboard" 
-                            fill
-                            className="object-cover" // Removed grayscale, added full color
-                        />
-                         <div className="absolute bottom-2 right-2 bg-black/80 px-2 py-1 text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                            CLICK TO EXPAND ↗
+                    <div className="space-y-6">
+                        <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg hover:border-green-900/30 transition-colors">
+                            <h3 className="text-white text-xs font-bold uppercase mb-2">The Problem Set</h3>
+                            <p className="text-xs text-neutral-500 leading-relaxed">
+                                Disconnect between Demand (Loadout) and Supply (GCSS-A). Manual validation of TMRs leads to "Ghost Truck" scheduling—missions planned against non-mission capable assets.
+                            </p>
+                        </div>
+                        <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg hover:border-green-900/30 transition-colors">
+                            <h3 className="text-white text-xs font-bold uppercase mb-2">The Solution</h3>
+                            <p className="text-xs text-neutral-500 leading-relaxed">
+                                API integration between the Army's (Omni AI) Loadout and Palantir Vantage. The system queries what I describe as the "Golden Record" (fused GCSS-A/IPPS-A data) to validate feasibility before a mission is accepted.
+                            </p>
+                        </div>
+                        <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg hover:border-green-900/30 transition-colors">
+                            <h3 className="text-white text-xs font-bold uppercase mb-2">Deep Dive: Data Ontology</h3>
+                            <p className="text-xs text-neutral-500 leading-relaxed">
+                                The core achievement of CULT is not just the interface, but the underlying ontology. By linking disparate data objects—specifically the Equipment Status Report (ESR) from GCSS-Army and Personnel Records (Sanitized) from IPPS-A—I will create a live "Feasibility Index." This allows commanders to see not just <i>if</i> a truck is available, but if a <i>qualified</i> driver is present to operate it, removing the guesswork from movement planning.
+                            </p>
                         </div>
                     </div>
-                </Link>
-                <h3 className="text-white font-bold text-lg mb-2">CAL-C: Container Asset Logistics Calculator</h3>
-                <div className="flex gap-2 mb-4">
-                    <span className="text-[10px] bg-black text-neutral-500 px-2 py-1 border border-neutral-800">PREDICTIVE MODELING</span>
-                    <span className="text-[10px] bg-black text-neutral-500 px-2 py-1 border border-neutral-800">ASSET UTILIZATION</span>
                 </div>
-                <p className="text-xs text-neutral-500 leading-relaxed max-w-md">
-                    A predictive modeling engine for containerized movement. Showcased in Jan-26 Power BI for All competition @Department of War. Calculates "Slack Time" and feasibility based on Material Handling Equipment (MHE) throughput, node processing factors, and drive-time limitations. Provides a binary GO/NO-GO for mission planners.
-                </p>
-            </div>
+            </section>
 
-        </div>
-      </section>
-
-      {/* SECTION 3: DEPLOYMENT HISTORY */}
-      <section className="max-w-7xl mx-auto p-8 md:p-12 border-t border-neutral-800 mb-24">
-        <div className="flex items-center gap-4 mb-12">
-            <div className="w-2 h-2 bg-neutral-800"></div>
-            <h2 className="text-sm text-white font-bold uppercase tracking-widest">
-                MILITARY TIMELINE
-            </h2>
-        </div>
-
-        <div className="border-l border-neutral-800 ml-3 space-y-12">
-            
-            {/* ROLE 1 */}
-            <div className="pl-8 relative">
-                <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-black border border-neutral-600 rounded-full"></div>
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                    <h4 className="text-white font-bold">Battalion Staff Officer (SPO/S3)</h4>
-                    <span className="text-[10px] font-mono text-neutral-600">13TH CSSB // 2025 - PRESENT</span>
+            {/* SECTION 2: TACTICAL TOOLSET (ARC & CAL-C) */}
+            <section className="max-w-7xl mx-auto p-8 md:p-12 border-t border-neutral-800">
+                <div className="flex items-center gap-4 mb-12">
+                    <div className="w-2 h-2 bg-green-600 animate-pulse"></div>
+                    <h2 className="text-sm text-white font-bold uppercase tracking-widest">
+                        Tactical Toolset (Power BI)
+                    </h2>
                 </div>
-                <p className="text-xs text-neutral-500 max-w-2xl">
-                    Responsible for Land & Ammunition operations. Architected the unit's transition to Palantir Vantage.
-                </p>
-            </div>
 
-            {/* ROLE 2 */}
-            <div className="pl-8 relative">
-                <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-black border border-neutral-600 rounded-full"></div>
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                    <h4 className="text-white font-bold">Platoon Leader / Executive Officer</h4>
-                    <span className="text-[10px] font-mono text-neutral-600">VARIOUS UNITS // 2022 - 2025</span>
+                {/* NEW DASHBOARD VIEWER COMPONENT */}
+                <DashboardViewer dashboards={DASHBOARDS} />
+
+            </section>
+
+            {/* SECTION 3: DEPLOYMENT HISTORY */}
+            <section className="max-w-7xl mx-auto p-8 md:p-12 border-t border-neutral-800 mb-24">
+                <div className="flex items-center gap-4 mb-12">
+                    <div className="w-2 h-2 bg-neutral-800"></div>
+                    <h2 className="text-sm text-white font-bold uppercase tracking-widest">
+                        MILITARY TIMELINE
+                    </h2>
                 </div>
-                <p className="text-xs text-neutral-500 max-w-2xl">
-                    Direct leadership of logistics formations. Developed my first Power BI tools to solve immediate friction points in field environments.
-                </p>
-            </div>
 
+                <div className="border-l border-neutral-800 ml-3 space-y-12">
+
+                    {/* ROLE 1 */}
+                    <div className="pl-8 relative">
+                        <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-black border border-neutral-600 rounded-full"></div>
+                        <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                            <h4 className="text-white font-bold">Battalion Staff Officer (SPO/S3)</h4>
+                            <span className="text-[10px] font-mono text-neutral-600">13TH CSSB // 2025 - PRESENT</span>
+                        </div>
+                        <p className="text-xs text-neutral-500 max-w-2xl">
+                            Responsible for Land & Ammunition operations. Architected the unit's transition to Palantir Vantage.
+                        </p>
+                    </div>
+
+                    {/* ROLE 2 */}
+                    <div className="pl-8 relative">
+                        <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-black border border-neutral-600 rounded-full"></div>
+                        <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                            <h4 className="text-white font-bold">Platoon Leader / Executive Officer</h4>
+                            <span className="text-[10px] font-mono text-neutral-600">VARIOUS UNITS // 2022 - 2025</span>
+                        </div>
+                        <p className="text-xs text-neutral-500 max-w-2xl">
+                            Direct leadership of logistics formations. Developed my first Power BI tools to solve immediate friction points in field environments.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
         </div>
-      </section>
-    </div>
-  );
+    );
 }
