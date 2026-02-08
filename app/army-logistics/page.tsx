@@ -8,10 +8,10 @@ import DashboardViewer from '@/components/DashboardViewer';
 const cultBlueprint = `
 flowchart TD
     %% MONOCHROME STYLING
-    classDef demand fill:#000000,stroke:#ffffff,stroke-width:1px,color:#ffffff,font-family:ui-monospace,font-size:12px;
-    classDef supply fill:#000000,stroke:#ffffff,stroke-width:1px,color:#ffffff,font-family:ui-monospace,font-size:12px;
-    classDef bridge fill:#000000,stroke:#ffffff,stroke-width:1px,stroke-dasharray: 4 4,color:#ffffff,font-family:ui-monospace,font-size:12px;
-    classDef note fill:#000000,stroke:#555555,stroke-width:1px,color:#999999,font-family:ui-monospace,font-size:10px,stroke-dasharray: 2 2;
+    classDef demand fill:#000000,stroke:#ffffff,stroke-width:1px,color:#ffffff,font-family:sans-serif,font-size:12px;
+    classDef supply fill:#000000,stroke:#ffffff,stroke-width:1px,color:#ffffff,font-family:sans-serif,font-size:12px;
+    classDef bridge fill:#000000,stroke:#ffffff,stroke-width:1px,stroke-dasharray: 4 4,color:#ffffff,font-family:sans-serif,font-size:12px;
+    classDef note fill:#000000,stroke:#555555,stroke-width:1px,color:#999999,font-family:sans-serif,font-size:10px,stroke-dasharray: 2 2;
 
     %% ARROW STYLING (Pure White)
     linkStyle default stroke:#ffffff,stroke-width:1px,fill:none;
@@ -92,15 +92,10 @@ export default function ArmyPage() {
             <div className="max-w-7xl mx-auto p-8 md:p-12 border-b border-neutral-800">
                 <div className="flex justify-between items-start">
                     <div>
-                        <Link href="/" className="text-[10px] text-neutral-500 hover:text-white uppercase tracking-widest mb-6 inline-block transition-colors hover:translate-x-1 duration-300">
-                            {'<'} RETURN_ROOT
+                        <Link href="/" className="group flex items-center gap-2 text-xs font-bold text-neutral-500 hover:text-white uppercase tracking-widest mb-6 transition-colors">
+                            <span className="group-hover:-translate-x-1 transition-transform">←</span>
+                            <span>Home</span>
                         </Link>
-                        <div className="flex items-center gap-3 mb-2">
-                            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                            <p className="text-xs text-green-500 uppercase tracking-widest">
-                                System_Online // US_Army_Logistics
-                            </p>
-                        </div>
                         <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4">
                             OPERATIONAL LOGISTICS
                         </h1>
@@ -121,7 +116,7 @@ export default function ArmyPage() {
                 <div className="flex items-center gap-4 mb-8">
                     <div className="w-2 h-2 bg-white"></div>
                     <h2 className="text-sm text-white font-bold uppercase tracking-widest">
-                        Primary Architecture: The Transformation of the Army's Common User Land Transportation (C.U.L.T.) Manager
+                        Primary Architecture: C.U.L.T. Manager
                     </h2>
                 </div>
 

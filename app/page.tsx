@@ -3,89 +3,102 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-black text-white font-mono selection:bg-white/20 flex flex-col">
-      
-      {/* 1. TOP STATUS BAR */}
-      <header className="border-b border-neutral-800 p-6 flex justify-between items-center text-[10px] tracking-widest uppercase text-neutral-500">
-        <div>Lee_Ambrose_Park // Portfolio_v1.0</div>
-        <div className="flex gap-6">
-          <span>Born and Raised: CALIFORNIA_USA</span>
-          <span className="text-white animate-pulse">● System_Online</span>
-        </div>
-      </header>
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-neutral-800 selection:text-white flex flex-col">
 
-      {/* 2. MAIN INTRO SECTION */}
-      <main className="flex-grow flex flex-col justify-center p-6 md:p-12 lg:p-24 max-w-7xl mx-auto w-full">
-        
-        <div className="mb-16 flex flex-col md:flex-row gap-12 items-center md:items-start">
-          
+      {/* 1. HERO / BIO SECTION */}
+      <main className="flex-grow flex flex-col justify-center p-6 md:p-12 lg:p-24 max-w-5xl mx-auto w-full">
+
+        <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start mb-20 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+
           {/* PROFILE PHOTO */}
-          {/* Added 'object-top' to fix cropping */}
-          <div className="relative w-40 h-40 md:w-56 md:h-56 shrink-0 rounded-full overflow-hidden border-2 border-neutral-800 group">
-            <Image 
-              src="/my-photo.jpg" 
+          <div className="relative w-32 h-32 md:w-48 md:h-48 shrink-0 rounded-2xl overflow-hidden border-2 border-neutral-800 shadow-2xl">
+            <Image
+              src="/my-photo.jpg"
               alt="Lee Ambrose Park"
               fill
-              className="object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500"
+              className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
               priority
             />
           </div>
 
-          {/* HEADLINE TEXT */}
-          <div className="flex flex-col justify-center h-full pt-4">
-            <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-6">
-              LOGISTICS OFFICER <span className="text-neutral-600">X</span> DATA
-            </h1>
-            <p className="text-sm md:text-lg text-neutral-400 max-w-3xl leading-relaxed">
-              Bridging the tactical edge with systems architecture. <br/>
-              U.S. Army Logistics Officer & Georgetown Supply Chain Master's Candidate. <br/>
-              <span className="text-neutral-500 block mt-2">
-                // Aiming for (MBA at UCLA Anderson) no later than 2027.
-              </span>
-            </p>
+          {/* BIO TEXT */}
+          <div className="flex flex-col justify-center space-y-6">
+            <div>
+              <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-2">
+                Lee Ambrose Park
+              </h1>
+              <p className="text-neutral-500 text-sm md:text-base uppercase tracking-widest font-mono">
+                Logistics // Analytics // Strategy
+              </p>
+            </div>
+
+            <div className="prose prose-invert text-neutral-400 leading-relaxed max-w-2xl text-sm md:text-base">
+              <p>
+                I am a 29-year-old logistics professional and current graduate student at Georgetown University (MPS Supply Chain Management).
+                Born and raised in California, I graduated from Westmont College in my hometown with a non-technical degree before pivoting into the data-driven world of modern logistics.
+              </p>
+              <p>
+                Currently, I serve as a Logistics Officer involved in high-level sustainment operations, specifically leading the Palantir Vantage project
+                to modernize Army workflows. Off duty, I enjoy a simple life: trail running, reading, writing, and hanging out with my wife and our beagle.
+              </p>
+              <p>
+                <span className="text-white font-medium">Next Chapter:</span> Aiming for opportunities in Defense Tech or Consulting in the Los Angeles area upon my exit from the Army.
+              </p>
+            </div>
+
+            {/* SOCIAL LINKS - CLEAN */}
+            <div className="flex gap-6 text-sm font-medium text-neutral-500">
+              <a href="https://www.linkedin.com/in/leepark/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+              <a href="mailto:lap118@georgetown.edu" className="hover:text-white transition-colors">Email</a>
+              <a href="#" className="hover:text-white transition-colors">GitHub</a>
+            </div>
           </div>
         </div>
 
-        {/* 3. THE TWO BUCKETS (NAVIGATION) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-          
-          {/* BUCKET I: OPERATIONAL */}
-          <Link href="/army-logistics" className="group relative block h-64 md:h-80 border border-neutral-800 bg-neutral-950 p-8 hover:bg-white hover:border-white transition-all duration-300">
-            <div className="flex flex-col h-full justify-between relative z-10">
-              <div className="flex justify-between items-start">
-                <span className="text-[10px] uppercase tracking-widest text-neutral-500 group-hover:text-black transition-colors">
-                  Bucket_01
-                </span>
-                <span className="text-xl group-hover:text-black transition-colors">↗</span>
+        {/* 2. NAVIGATION BUCKETS (CLEAN) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+
+          {/* BUCKET I: OPERATIONAL (PROFESSIONAL) */}
+          <Link href="/army-logistics" className="group block h-auto min-h-[16rem] bg-neutral-900/50 border border-neutral-800 rounded-lg p-8 hover:bg-neutral-900 hover:border-neutral-700 transition-all duration-300">
+            <div className="flex flex-col h-full justify-between">
+              <div className="flex justify-between items-start mb-8">
+                <div className="p-3 bg-neutral-950 rounded-md border border-neutral-800 group-hover:border-white/20 transition-colors">
+                  <svg className="w-6 h-6 text-neutral-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <span className="text-neutral-600 group-hover:text-white transition-colors text-xl">→</span>
               </div>
-              
+
               <div>
-                <h2 className="text-3xl font-bold mb-2 group-hover:text-black transition-colors">
-                  OPERATIONAL LOGISTICS
+                <h2 className="text-xl font-bold text-white mb-2">
+                  Professional Work
                 </h2>
-                <p className="text-xs text-neutral-500 group-hover:text-neutral-800 transition-colors max-w-xs">
-                  13th CSSB Land & Ammo. Palantir Vantage Architecture. Field Logistics Leadership.
+                <p className="text-sm text-neutral-400 leading-relaxed">
+                  Operational logistics, Palantir Vantage architecture, and Power BI dashboard development for 13th CSSB.
                 </p>
               </div>
             </div>
           </Link>
 
           {/* BUCKET II: ACADEMICS */}
-          <Link href="/academics" className="group relative block h-64 md:h-80 border border-neutral-800 bg-neutral-950 p-8 hover:bg-white hover:border-white transition-all duration-300">
-            <div className="flex flex-col h-full justify-between relative z-10">
-              <div className="flex justify-between items-start">
-                <span className="text-[10px] uppercase tracking-widest text-neutral-500 group-hover:text-black transition-colors">
-                  Bucket_02
-                </span>
-                <span className="text-xl group-hover:text-black transition-colors">↗</span>
+          <Link href="/academics" className="group block h-auto min-h-[16rem] bg-neutral-900/50 border border-neutral-800 rounded-lg p-8 hover:bg-neutral-900 hover:border-neutral-700 transition-all duration-300">
+            <div className="flex flex-col h-full justify-between">
+              <div className="flex justify-between items-start mb-8">
+                <div className="p-3 bg-neutral-950 rounded-md border border-neutral-800 group-hover:border-white/20 transition-colors">
+                  <svg className="w-6 h-6 text-neutral-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <span className="text-neutral-600 group-hover:text-white transition-colors text-xl">→</span>
               </div>
-              
+
               <div>
-                <h2 className="text-3xl font-bold mb-2 group-hover:text-black transition-colors">
-                  ACADEMIC 
+                <h2 className="text-xl font-bold text-white mb-2">
+                  Academic Database
                 </h2>
-                <p className="text-xs text-neutral-500 group-hover:text-neutral-800 transition-colors max-w-xs">
-                  Georgetown University MPS. Capstone: Automated Feasibility Analysis (C.U.L.T. Report for the Modern Warfighter).
+                <p className="text-sm text-neutral-400 leading-relaxed">
+                  Georgetown MPS coursework, Capstone project on Automated Feasibility Analysis, and research artifacts.
                 </p>
               </div>
             </div>
@@ -94,26 +107,9 @@ export default function Home() {
         </div>
       </main>
 
-      {/* 4. FOOTER */}
-      <footer className="border-t border-neutral-800 p-6 text-[10px] text-neutral-600 uppercase tracking-widest flex justify-between">
-        <div>© 2026</div>
-        <div className="flex gap-4">
-          <a 
-            href="https://www.linkedin.com/in/leepark/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="hover:text-white transition-colors"
-          >
-            LinkedIn
-          </a>
-          <a href="#" className="hover:text-white transition-colors">GitHub</a>
-          <a 
-            href="mailto:lap118@georgetown.edu" 
-            className="hover:text-white transition-colors"
-          >
-            Email
-          </a>
-        </div>
+      {/* 3. SUBTLE FOOTER */}
+      <footer className="p-8 text-center text-xs text-neutral-600">
+        <p>&copy; {new Date().getFullYear()} Lee Ambrose Park. Built with Next.js & Tailwind.</p>
       </footer>
 
     </div>

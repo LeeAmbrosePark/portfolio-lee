@@ -104,15 +104,10 @@ export default function AcademicsPage() {
       <div className="max-w-7xl mx-auto p-6 md:p-12 border-b border-neutral-900">
         <div className="flex justify-between items-start">
           <div>
-            <Link href="/" className="text-[10px] text-neutral-600 hover:text-white uppercase tracking-widest mb-6 inline-block transition-colors hover:translate-x-1 duration-300">
-              {'<'} RETURN_ROOT
+            <Link href="/" className="group flex items-center gap-2 text-xs font-bold text-neutral-500 hover:text-white uppercase tracking-widest mb-6 transition-colors">
+              <span className="group-hover:-translate-x-1 transition-transform">←</span>
+              <span>Home</span>
             </Link>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              <p className="text-xs text-green-500 uppercase tracking-widest">
-                System_Online // Georgetown_University
-              </p>
-            </div>
 
             <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4">
               ACADEMIC_DATABASE
@@ -139,8 +134,8 @@ export default function AcademicsPage() {
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          <h2 className="text-xs text-green-500 font-bold uppercase tracking-widest">
-            Active_Process: Capstone_Project
+          <h2 className="text-xs text-neutral-400 font-bold uppercase tracking-widest">
+            Current Focus: Capstone Project
           </h2>
         </div>
 
@@ -157,19 +152,6 @@ export default function AcademicsPage() {
               <span className="border-b border-white group-hover:border-green-400 pb-0.5">View System Architecture</span>
               <span>→</span>
             </Link>
-          </div>
-          <div className="bg-black border border-neutral-800 p-4 font-mono text-[10px] text-neutral-500">
-            <div className="border-b border-neutral-800 pb-2 mb-2 uppercase tracking-widest">Stack_Trace</div>
-            <div className="grid grid-cols-2 gap-2">
-              <span>&gt; Palantir Vantage</span>
-              <span className="text-right text-green-900">CONNECTED</span>
-              <span>&gt; Python / PySpark</span>
-              <span className="text-right text-green-900">READY</span>
-              <span>&gt; TypeScript</span>
-              <span className="text-right text-green-900">READY</span>
-              <span>&gt; OMNI API</span>
-              <span className="text-right text-yellow-900">PENDING</span>
-            </div>
           </div>
         </div>
       </section>
