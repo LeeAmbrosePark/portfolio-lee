@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -8,20 +7,7 @@ export default function Home() {
       {/* 1. HERO / BIO SECTION */}
       <main className="flex-grow flex flex-col justify-center p-6 md:p-12 lg:p-24 max-w-5xl mx-auto w-full">
 
-        <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start mb-20 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-
-          {/* PROFILE PHOTO */}
-          <div className="relative w-32 h-32 md:w-48 md:h-48 shrink-0 rounded-2xl overflow-hidden border-2 border-neutral-800 shadow-2xl">
-            <Image
-              src="/my-photo.jpg"
-              alt="Lee Ambrose Park"
-              fill
-              className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
-              priority
-            />
-          </div>
-
-          {/* BIO TEXT */}
+        <div className="flex flex-col items-start mb-20 animate-in fade-in slide-in-from-bottom-4 duration-1000">
           <div className="flex flex-col justify-center space-y-6">
             <div>
               <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-2">
@@ -29,20 +15,6 @@ export default function Home() {
               </h1>
               <p className="text-neutral-500 text-sm md:text-base uppercase tracking-widest font-mono">
                 Logistics // Analytics // Strategy
-              </p>
-            </div>
-
-            <div className="prose prose-invert text-neutral-400 leading-relaxed max-w-2xl text-sm md:text-base">
-              <p>
-                I am a 29-year-old logistics professional and current graduate student at Georgetown University (MPS Supply Chain Management).
-                Born and raised in California, I graduated from Westmont College in my hometown with a non-technical degree before pivoting into the data-driven world of modern logistics.
-              </p>
-              <p>
-                Currently, I serve as a Logistics Officer involved in high-level sustainment operations, specifically leading the Palantir Vantage project
-                to modernize Army workflows. Off duty, I enjoy a simple life: trail running, reading, writing, and hanging out with my wife and our beagle.
-              </p>
-              <p>
-                <span className="text-white font-medium">Next Chapter:</span> Aiming for opportunities in Defense Tech or Consulting in the Los Angeles area upon my exit from the Army.
               </p>
             </div>
 
