@@ -3,6 +3,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+export type Artifact = {
+    name: string;
+    type: 'paper' | 'presentation' | 'spreadsheet' | 'video' | 'report';
+    description: string;
+    url?: string;
+};
+
 export type Course = {
     code: string;
     title: string;
@@ -11,19 +18,43 @@ export type Course = {
     tags: string[];
     semester?: string;
     grade?: string;
-    presentationUrl?: string; // e.g., "/presentations/mpsc-5530-final.pdf"
+    presentationUrl?: string;
+    artifacts?: Artifact[];
+    highlights?: string[];
 };
 
 interface CourseTableProps {
     courses: Course[];
 }
 
+const ArtifactIcon = ({ type }: { type: Artifact['type'] }) => {
+    const cls = "w-4 h-4";
+    switch (type) {
+        case 'paper':
+            return <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>;
+        case 'presentation':
+            return <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h16.5M3.75 3h-1.5m18 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5" /></svg>;
+        case 'spreadsheet':
+            return <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M10.875 12c-.621 0-1.125.504-1.125 1.125M12 12c.621 0 1.125.504 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 0v1.5c0 .621-.504 1.125-1.125 1.125" /></svg>;
+        case 'video':
+            return <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>;
+        case 'report':
+            return <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25Z" /></svg>;
+    }
+};
+
+const TYPE_LABELS: Record<Artifact['type'], string> = {
+    paper: 'Paper',
+    presentation: 'Slides',
+    spreadsheet: 'Data',
+    video: 'Video',
+    report: 'Report',
+};
+
 export default function CourseTable({ courses }: CourseTableProps) {
     const [filter, setFilter] = useState('');
-    const [sortConfig, setSortConfig] = useState<{ key: keyof Course; direction: 'asc' | 'desc' } | null>(null);
     const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
-    // 1. Filter
     const filteredCourses = courses.filter((course) => {
         const searchTerm = filter.toLowerCase();
         return (
@@ -34,126 +65,65 @@ export default function CourseTable({ courses }: CourseTableProps) {
         );
     });
 
-    // 2. Sort
-    const sortedCourses = [...filteredCourses].sort((a, b) => {
-        if (!sortConfig) return 0;
-
-        // Handle specific sort keys that might be undefined safely
-        // For this simple example, we'll cast to string for comparison or handle specific types if needed
-        const aValue = String(a[sortConfig.key] || '').toLowerCase();
-        const bValue = String(b[sortConfig.key] || '').toLowerCase();
-
-        if (aValue < bValue) {
-            return sortConfig.direction === 'asc' ? -1 : 1;
-        }
-        if (aValue > bValue) {
-            return sortConfig.direction === 'asc' ? 1 : -1;
-        }
-        return 0;
-    });
-
-    const requestSort = (key: keyof Course) => {
-        let direction: 'asc' | 'desc' = 'asc';
-        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = 'desc';
-        }
-        setSortConfig({ key, direction });
-    };
-
-    const getSortIcon = (key: keyof Course) => {
-        if (!sortConfig || sortConfig.key !== key) return <span className="opacity-30">↕</span>;
-        return sortConfig.direction === 'asc' ? <span className="text-green-500">↑</span> : <span className="text-green-500">↓</span>;
-    };
-
     return (
-        <div className="w-full font-mono text-xs md:text-sm">
+        <div className="w-full">
 
-            {/* CONTROLS */}
-            <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-6 border-b border-white/10 pb-6">
-                <div className="w-full md:w-1/2">
-                    <label className="text-[10px] uppercase text-neutral-500 tracking-widest mb-2 block">
-                // SEARCH_DATABASE
-                    </label>
-                    <div className="relative group">
-                        <span className="absolute left-4 top-3.5 text-neutral-600 group-focus-within:text-green-500 transition-colors">
-                            Search:
-                        </span>
-                        <input
-                            type="text"
-                            placeholder="Find course, tag, or skill..."
-                            className="w-full bg-black border border-neutral-800 text-white pl-20 p-3 ring-1 ring-transparent focus:ring-green-500/50 focus:border-green-500/50 transition-all outline-none"
-                            value={filter}
-                            onChange={(e) => setFilter(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="text-[10px] text-neutral-600 uppercase tracking-widest flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    {filteredCourses.length} RECORDS FOUND
-                </div>
+            {/* SEARCH */}
+            <div className="mb-8">
+                <input
+                    type="text"
+                    placeholder="Search courses, tags, or skills..."
+                    className="w-full max-w-md bg-white border border-neutral-200 text-black px-4 py-3 rounded-lg focus:border-black focus:ring-1 focus:ring-black/10 transition-all outline-none text-sm"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                />
+                <p className="text-xs text-neutral-400 mt-2">{filteredCourses.length} courses</p>
             </div>
 
-            {/* TABLE HEADER */}
-            <div className="hidden md:grid grid-cols-12 gap-4 px-4 py-3 bg-neutral-900/40 border-y border-white/5 text-[10px] uppercase tracking-widest text-neutral-500 font-bold select-none">
-                <div className="col-span-2 cursor-pointer hover:text-white transition-colors flex items-center gap-2 group" onClick={() => requestSort('code')}>
-                    ID_CODE {getSortIcon('code')}
-                </div>
-                <div className="col-span-4 cursor-pointer hover:text-white transition-colors flex items-center gap-2 group" onClick={() => requestSort('title')}>
-                    COURSE_TITLE {getSortIcon('title')}
-                </div>
-                <div className="col-span-2 cursor-pointer hover:text-white transition-colors flex items-center gap-2 group" onClick={() => requestSort('category')}>
-                    CATEGORY {getSortIcon('category')}
-                </div>
-                <div className="col-span-4">
-                    KEY_TAGS // SKILLS
-                </div>
-            </div>
-
-            {/* TABLE BODY */}
-            <div className="space-y-1 mt-2">
+            {/* COURSE TILES */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <AnimatePresence>
-                    {sortedCourses.map((course) => (
+                    {filteredCourses.map((course) => (
                         <motion.div
                             key={course.code}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, height: 0 }}
+                            exit={{ opacity: 0 }}
                             layout
                             onClick={() => setSelectedCourse(course)}
-                            className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 p-4 border border-transparent hover:border-green-900/50 hover:bg-green-900/10 transition-all cursor-pointer group items-center relative"
+                            className="border border-neutral-200 rounded-lg p-6 hover:border-black transition-colors cursor-pointer group"
                         >
-                            {/* Mobile Label */}
-                            <div className="md:hidden text-[10px] text-neutral-600 mb-1">ID_CODE</div>
-
-                            <div className="col-span-2 font-bold text-white group-hover:text-green-400 transition-colors font-mono">
-                                {course.code}
-                            </div>
-
-                            <div className="md:hidden text-[10px] text-neutral-600 mt-2 mb-1">TITLE</div>
-                            <div className="col-span-4 text-neutral-300 font-medium">
-                                {course.title}
-                            </div>
-
-                            <div className="md:hidden text-[10px] text-neutral-600 mt-2 mb-1">CATEGORY</div>
-                            <div className="col-span-2">
-                                <span className="text-[10px] border border-neutral-800 px-2 py-0.5 text-neutral-500 bg-neutral-950 inline-block rounded-sm">
-                                    {course.category}
-                                </span>
-                            </div>
-
-                            <div className="md:hidden text-[10px] text-neutral-600 mt-2 mb-1">TAGS</div>
-                            <div className="col-span-4 flex flex-wrap gap-2">
-                                {course.tags.slice(0, 3).map(tag => (
-                                    <span key={tag} className="text-[10px] text-neutral-500">#{tag}</span>
-                                ))}
-                                {course.tags.length > 3 && (
-                                    <span className="text-[10px] text-neutral-700">+{course.tags.length - 3}</span>
+                            <div className="flex items-center justify-between mb-3">
+                                <span className="text-xs text-neutral-400">{course.code}</span>
+                                {course.semester && (
+                                    <span className="text-xs text-neutral-400">{course.semester}</span>
                                 )}
                             </div>
 
-                            <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span className="text-green-500 text-lg">›</span>
+                            <h3 className="text-base font-normal text-black mb-2 group-hover:underline">
+                                {course.title}
+                            </h3>
+
+                            <p className="text-sm text-neutral-500 leading-relaxed line-clamp-2 mb-4">
+                                {course.description}
+                            </p>
+
+                            <div className="flex flex-wrap gap-1.5">
+                                {course.tags.slice(0, 3).map(tag => (
+                                    <span key={tag} className="text-[11px] text-neutral-400 border border-neutral-200 px-2 py-0.5 rounded">
+                                        {tag}
+                                    </span>
+                                ))}
+                                {course.tags.length > 3 && (
+                                    <span className="text-[11px] text-neutral-300">+{course.tags.length - 3}</span>
+                                )}
                             </div>
+
+                            {course.artifacts && course.artifacts.length > 0 && (
+                                <div className="mt-4 pt-3 border-t border-neutral-100 text-xs text-neutral-400">
+                                    {course.artifacts.length} deliverable{course.artifacts.length !== 1 ? 's' : ''}
+                                </div>
+                            )}
                         </motion.div>
                     ))}
                 </AnimatePresence>
@@ -168,108 +138,121 @@ export default function CourseTable({ courses }: CourseTableProps) {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setSelectedCourse(null)}
-                            className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+                            className="absolute inset-0 bg-white/80 backdrop-blur-sm"
                         />
 
                         <motion.div
-                            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                            initial={{ scale: 0.97, opacity: 0, y: 10 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.95, opacity: 0 }}
+                            exit={{ scale: 0.97, opacity: 0 }}
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            className="relative bg-black border border-green-900/50 w-full max-w-2xl max-h-[85vh] overflow-y-auto shadow-2xl shadow-green-900/20 rounded-sm"
+                            className="relative bg-white border border-neutral-200 w-full max-w-2xl max-h-[85vh] overflow-y-auto shadow-xl rounded-lg"
                         >
-                            {/* Modal Content */}
                             <div className="p-8">
                                 <div className="absolute top-0 right-0 p-4">
                                     <button
                                         onClick={() => setSelectedCourse(null)}
-                                        className="text-neutral-500 hover:text-white transition-colors p-2"
+                                        className="text-neutral-400 hover:text-black transition-colors p-2 text-sm"
                                     >
-                                        [ESC] CLOSE
+                                        Close
                                     </button>
                                 </div>
 
-
-                                <div className="mb-8 border-b border-white/10 pb-6">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="text-xs text-black bg-green-500 px-2 py-1 font-bold tracking-widest uppercase">
-                                    // RECORD_RETRIEVED
-                                        </div>
-                                        <span className="font-mono text-green-500 opacity-50">{selectedCourse.code}</span>
-                                    </div>
-
-                                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">{selectedCourse.title}</h2>
-
-                                    <div className="flex flex-wrap gap-4 text-xs text-neutral-400 font-mono border-l-2 border-green-500 pl-4">
-                                        <span className="uppercase">{selectedCourse.category}</span>
-                                        <span className="text-neutral-700">|</span>
-                                        <span>SEMESTER: {selectedCourse.semester || 'N/A'}</span>
-                                        {selectedCourse.grade && (
-                                            <>
-                                                <span className="text-neutral-700">|</span>
-                                                <span className="text-white">GRADE: {selectedCourse.grade}</span>
-                                            </>
-                                        )}
-                                    </div>
+                                {/* Header */}
+                                <div className="mb-6 pb-6 border-b border-neutral-100">
+                                    <p className="text-xs text-neutral-400 mb-2">{selectedCourse.code} &middot; {selectedCourse.semester || ''}</p>
+                                    <h2 className="text-2xl font-normal text-black mb-3">{selectedCourse.title}</h2>
+                                    <span className="text-xs text-neutral-400 border border-neutral-200 px-2 py-1 rounded">{selectedCourse.category}</span>
                                 </div>
 
-                                <div className="prose prose-invert prose-sm max-w-none">
-                                    <h3 className="text-xs font-bold uppercase text-neutral-500 mb-3 tracking-widest">
-                                        Course Abstract
-                                    </h3>
-                                    <p className="text-neutral-300 leading-relaxed mb-8 text-sm md:text-base">
+                                {/* Description */}
+                                <div className="mb-6">
+                                    <p className="text-neutral-600 leading-relaxed text-[15px]">
                                         {selectedCourse.description}
                                     </p>
+                                </div>
 
-                                    <h3 className="text-xs font-bold uppercase text-neutral-500 mb-3 tracking-widest">
-                                        Competencies Acquired
+                                {/* Highlights */}
+                                {selectedCourse.highlights && selectedCourse.highlights.length > 0 && (
+                                    <div className="mb-6">
+                                        <h3 className="text-xs font-bold uppercase text-neutral-400 mb-3 tracking-wide">
+                                            Key Work
+                                        </h3>
+                                        <ul className="space-y-2">
+                                            {selectedCourse.highlights.map((h, i) => (
+                                                <li key={i} className="flex items-start gap-2 text-sm text-neutral-600">
+                                                    <span className="text-neutral-300 mt-0.5 shrink-0">&ndash;</span>
+                                                    <span>{h}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                {/* Tags */}
+                                <div className="mb-6">
+                                    <h3 className="text-xs font-bold uppercase text-neutral-400 mb-3 tracking-wide">
+                                        Skills
                                     </h3>
-                                    <div className="flex flex-wrap gap-2 mb-8">
+                                    <div className="flex flex-wrap gap-2">
                                         {selectedCourse.tags.map(tag => (
-                                            <span key={tag} className="border border-neutral-800 bg-neutral-900/50 px-3 py-1.5 text-xs text-neutral-300 hover:border-green-500/50 hover:text-green-400 transition-colors cursor-default">
-                                                #{tag}
+                                            <span key={tag} className="text-xs text-neutral-500 border border-neutral-200 px-3 py-1.5 rounded">
+                                                {tag}
                                             </span>
                                         ))}
                                     </div>
+                                </div>
 
-                                    {/* SECTION FOR FILE UPLOADS */}
-                                    <div className={`border p-6 rounded-sm relative overflow-hidden group transition-colors ${selectedCourse.presentationUrl
-                                            ? "bg-neutral-900/30 border-neutral-700 hover:border-white"
-                                            : "bg-neutral-950 border-neutral-800"
-                                        }`}>
-                                        <h3 className={`text-[10px] font-bold uppercase mb-4 tracking-widest ${selectedCourse.presentationUrl ? "text-white" : "text-neutral-600"
-                                            }`}>
-                                            ARTIFACTS / DELIVERABLES
+                                {/* Artifacts */}
+                                <div className="border border-neutral-200 rounded-lg overflow-hidden">
+                                    <div className="bg-neutral-50 px-4 py-3 border-b border-neutral-200 flex items-center justify-between">
+                                        <h3 className="text-xs font-bold uppercase text-neutral-400 tracking-wide">
+                                            Deliverables
                                         </h3>
-
-                                        {selectedCourse.presentationUrl ? (
-                                            <div className="flex items-center gap-4">
-                                                <div className="p-3 bg-white text-black rounded-sm">
-                                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <h4 className="text-sm font-bold text-white">Final Presentation / deliverable</h4>
-                                                    <a
-                                                        href={selectedCourse.presentationUrl}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-xs text-neutral-400 hover:text-white underline decoration-neutral-600 hover:decoration-white transition-all"
-                                                    >
-                                                        Download PDF ↗
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div className="flex flex-col items-center justify-center border-2 border-dashed border-neutral-800 p-6 text-center">
-                                                <p className="text-xs text-neutral-500 mb-2">No digital artifacts currently available.</p>
-                                            </div>
+                                        {selectedCourse.artifacts && selectedCourse.artifacts.length > 0 && (
+                                            <span className="text-xs text-neutral-400">
+                                                {selectedCourse.artifacts.length} items
+                                            </span>
                                         )}
                                     </div>
+
+                                    {selectedCourse.artifacts && selectedCourse.artifacts.length > 0 ? (
+                                        <div className="divide-y divide-neutral-100">
+                                            {selectedCourse.artifacts.map((artifact, i) => (
+                                                <div key={i} className="flex items-start gap-3 p-4 hover:bg-neutral-50 transition-colors">
+                                                    <div className="shrink-0 w-8 h-8 flex items-center justify-center border border-neutral-200 rounded text-neutral-400">
+                                                        <ArtifactIcon type={artifact.type} />
+                                                    </div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <div className="flex items-center gap-2 mb-0.5">
+                                                            <h4 className="text-sm text-black">{artifact.name}</h4>
+                                                            <span className="text-[10px] text-neutral-400 border border-neutral-200 px-1.5 py-0.5 rounded shrink-0">
+                                                                {TYPE_LABELS[artifact.type]}
+                                                            </span>
+                                                        </div>
+                                                        <p className="text-xs text-neutral-400 leading-relaxed">{artifact.description}</p>
+                                                        {artifact.url && (
+                                                            <a
+                                                                href={artifact.url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="inline-flex items-center gap-1 text-[11px] text-black underline mt-1"
+                                                                onClick={(e) => e.stopPropagation()}
+                                                            >
+                                                                Download
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="p-6 text-center">
+                                            <p className="text-sm text-neutral-400">No deliverables uploaded yet.</p>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
-
                         </motion.div>
                     </div>
                 )}

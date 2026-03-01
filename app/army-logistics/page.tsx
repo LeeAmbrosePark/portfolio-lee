@@ -4,17 +4,14 @@ import Link from 'next/link';
 import Mermaid from '@/components/Mermaid';
 import DashboardViewer from '@/components/DashboardViewer';
 
-// MONOCHROME / HIGH-CONTRAST BLUEPRINT
 const cultBlueprint = `
 flowchart TD
-    %% MONOCHROME STYLING
-    classDef demand fill:#000000,stroke:#ffffff,stroke-width:1px,color:#ffffff,font-family:sans-serif,font-size:12px;
-    classDef supply fill:#000000,stroke:#ffffff,stroke-width:1px,color:#ffffff,font-family:sans-serif,font-size:12px;
-    classDef bridge fill:#000000,stroke:#ffffff,stroke-width:1px,stroke-dasharray: 4 4,color:#ffffff,font-family:sans-serif,font-size:12px;
-    classDef note fill:#000000,stroke:#555555,stroke-width:1px,color:#999999,font-family:sans-serif,font-size:10px,stroke-dasharray: 2 2;
+    classDef demand fill:#ffffff,stroke:#000000,stroke-width:1px,color:#000000,font-family:Georgia,font-size:12px;
+    classDef supply fill:#ffffff,stroke:#000000,stroke-width:1px,color:#000000,font-family:Georgia,font-size:12px;
+    classDef bridge fill:#ffffff,stroke:#000000,stroke-width:1px,stroke-dasharray: 4 4,color:#000000,font-family:Georgia,font-size:12px;
+    classDef note fill:#ffffff,stroke:#999999,stroke-width:1px,color:#666666,font-family:Georgia,font-size:10px,stroke-dasharray: 2 2;
 
-    %% ARROW STYLING (Pure White)
-    linkStyle default stroke:#ffffff,stroke-width:1px,fill:none;
+    linkStyle default stroke:#000000,stroke-width:1px,fill:none;
 
     subgraph Phase1 ["DEMAND SIGNAL (OMNI/LOADOUT)"]
         direction TB
@@ -46,23 +43,21 @@ flowchart TD
         subgraph Ontology ["GOLDEN RECORDS"]
             Veh["OBJECT: VEHICLE (FMC)"]
             Op["OBJECT: OPERATOR (QUALIFIED)"]
-            Link{"RELATIONSHIP LOGIC"}
+            Link_node{"RELATIONSHIP LOGIC"}
             
-            Veh --- Link
-            Op --- Link
+            Veh --- Link_node
+            Op --- Link_node
         end
         
         VantageEntry --> Ontology
         Ontology -->|VALIDATE| Decision["OUTPUT: FEASIBILITY SCORE"]
     end
 
-    %% FEEDBACK LOOP
     Decision -->|STATUS: GREEN| Gantt
     Decision -->|STATUS: RED| Gantt
 
-    %% APPLY STYLES
     class User,LoadoutUI,Gantt demand;
-    class VantageEntry,GCSS,IPPS,ATIS,Veh,Op,Link,Decision,Ontology,Sources supply;
+    class VantageEntry,GCSS,IPPS,ATIS,Veh,Op,Link_node,Decision,Ontology,Sources supply;
     class API bridge;
     class note1 note;
 `;
@@ -71,138 +66,120 @@ const DASHBOARDS = [
     {
         id: 'arc',
         title: 'ARC: Ammunition & Range Coordinator',
-        description: 'Automated the calculation of Class V requirements for weapon qualification ranges. Inputs: Density of soldiers and Weapon System (M4, M249, etc.). Outputs: Exact DODIC requirements, regulatory compliance checks, and range site selection validation.',
+        description: 'Automated the calculation of Class V requirements for weapon qualification ranges. Inputs: soldier density and weapon system (M4, M249, etc.). Outputs: exact DODIC requirements, compliance checks, and range site validation.',
         imageSrc: '/arc-dashboard.png',
-        tags: ['POWER BI', 'LOGISTICS ESTIMATION', 'AUTOMATION']
+        tags: ['Power BI', 'Logistics', 'Automation']
     },
     {
         id: 'calc',
         title: 'CAL-C: Container Asset Logistics Calculator',
-        description: 'A predictive modeling engine for containerized movement. Showcased in Jan-26 Power BI for All competition @Department of War. Calculates "Slack Time" and feasibility based on Material Handling Equipment (MHE) throughput, node processing factors, and drive-time limitations. Provides a binary GO/NO-GO for mission planners.',
+        description: 'A predictive modeling engine for containerized movement. Showcased in the Jan 2026 Power BI for All competition. Calculates slack time and feasibility based on MHE throughput, node processing, and drive-time limitations.',
         imageSrc: '/calc-dashboard.png',
-        tags: ['PREDICTIVE MODELING', 'ASSET UTILIZATION', 'DECISION SUPPORT']
+        tags: ['Predictive Modeling', 'Decision Support']
     }
 ];
 
 export default function ArmyPage() {
     return (
-        <div className="min-h-screen bg-black text-slate-300 font-mono selection:bg-green-500/30">
+        <div className="min-h-screen bg-white text-black">
 
-            {/* HEADER SECTION */}
-            <div className="max-w-7xl mx-auto p-8 md:p-12 border-b border-neutral-800">
-                <div className="flex justify-between items-start">
-                    <div>
-                        <Link href="/" className="group flex items-center gap-2 text-xs font-bold text-neutral-500 hover:text-white uppercase tracking-widest mb-6 transition-colors">
-                            <span className="group-hover:-translate-x-1 transition-transform">←</span>
-                            <span>Home</span>
-                        </Link>
-                        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4">
-                            OPERATIONAL LOGISTICS
-                        </h1>
-                        <p className="text-sm text-neutral-500 max-w-xl uppercase tracking-wide">
-                            Systems architecture for sustainment operations. <br />
-                            Focus: Automation, Predictive Modeling, and Asset Visibility.
-                        </p>
-                    </div>
-                    <div className="hidden md:block text-right">
-                        <div className="text-xs text-neutral-600">STATUS</div>
-                        <div className="text-white text-xs">ACTIVE DUTY // U.S. ARMY</div>
-                    </div>
-                </div>
+            {/* HEADER */}
+            <div className="max-w-6xl mx-auto px-6 md:px-12 pt-12 pb-8 border-b border-neutral-100">
+                <Link href="/" className="group inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-black mb-8 transition-colors">
+                    <span className="group-hover:-translate-x-1 transition-transform">&larr;</span>
+                    <span>Home</span>
+                </Link>
+                <h1 className="text-3xl md:text-4xl font-normal text-black mb-3">
+                    Professional Work
+                </h1>
+                <p className="text-neutral-500 text-base max-w-2xl leading-relaxed">
+                    Systems architecture for sustainment operations.
+                    Automation, predictive modeling, and asset visibility.
+                </p>
             </div>
 
-            {/* SECTION 1: THE ARCHITECTURE (CULT) */}
-            <section className="max-w-7xl mx-auto p-8 md:p-12">
-                <div className="flex items-center gap-4 mb-8">
-                    <div className="w-2 h-2 bg-white"></div>
-                    <h2 className="text-sm text-white font-bold uppercase tracking-widest">
-                        Primary Architecture: C.U.L.T. Manager
+            {/* SECTION 1: CULT ARCHITECTURE */}
+            <section className="max-w-6xl mx-auto px-6 md:px-12 py-12 border-b border-neutral-100">
+                <div className="flex items-start gap-3 mb-8">
+                    <div className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></div>
+                    <h2 className="text-lg font-normal text-black">
+                        C.U.L.T. Manager Architecture
                     </h2>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-                    <div className="lg:col-span-2 bg-black border border-neutral-800 rounded-lg p-6 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 p-4 opacity-50">
-                            <span className="text-[10px] border border-neutral-800 px-2 py-1 text-neutral-500">VANTAGE_ONTOLOGY_V1.2</span>
-                        </div>
-                        {/* INVERT FILTER: Makes the diagram crisp white on black */}
-                        <div className="mt-8 overflow-x-auto grayscale invert-0">
+                    <div className="lg:col-span-2 border border-neutral-200 rounded-lg p-6 overflow-hidden">
+                        <div className="overflow-x-auto">
                             <Mermaid chart={cultBlueprint} />
                         </div>
                     </div>
 
-                    <div className="space-y-6">
-                        <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg hover:border-green-900/30 transition-colors">
-                            <h3 className="text-white text-xs font-bold uppercase mb-2">The Problem Set</h3>
-                            <p className="text-xs text-neutral-500 leading-relaxed">
-                                Disconnect between Demand (Loadout) and Supply (GCSS-A). Manual validation of TMRs leads to "Ghost Truck" scheduling—missions planned against non-mission capable assets.
+                    <div className="space-y-4">
+                        <div className="border border-neutral-200 p-6 rounded-lg">
+                            <h3 className="text-sm font-bold text-black mb-2">The Problem</h3>
+                            <p className="text-sm text-neutral-500 leading-relaxed">
+                                Disconnect between Demand (Loadout) and Supply (GCSS-A). Manual validation leads to missions planned against non-mission capable assets.
                             </p>
                         </div>
-                        <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg hover:border-green-900/30 transition-colors">
-                            <h3 className="text-white text-xs font-bold uppercase mb-2">The Solution</h3>
-                            <p className="text-xs text-neutral-500 leading-relaxed">
-                                API integration between the Army's (Omni AI) Loadout and Palantir Vantage. The system queries what I describe as the "Golden Record" (fused GCSS-A/IPPS-A data) to validate feasibility before a mission is accepted.
+                        <div className="border border-neutral-200 p-6 rounded-lg">
+                            <h3 className="text-sm font-bold text-black mb-2">The Solution</h3>
+                            <p className="text-sm text-neutral-500 leading-relaxed">
+                                API integration between the Army&apos;s Loadout and Palantir Vantage. The system queries the &ldquo;Golden Record&rdquo; (fused GCSS-A/IPPS-A data) to validate feasibility before a mission is accepted.
                             </p>
                         </div>
-                        <div className="bg-neutral-950 border border-neutral-900 p-6 rounded-lg hover:border-green-900/30 transition-colors">
-                            <h3 className="text-white text-xs font-bold uppercase mb-2">Deep Dive: Data Ontology</h3>
-                            <p className="text-xs text-neutral-500 leading-relaxed">
-                                The core achievement of CULT is not just the interface, but the underlying ontology. By linking disparate data objects—specifically the Equipment Status Report (ESR) from GCSS-Army and Personnel Records (Sanitized) from IPPS-A—I will create a live "Feasibility Index." This allows commanders to see not just <i>if</i> a truck is available, but if a <i>qualified</i> driver is present to operate it, removing the guesswork from movement planning.
+                        <div className="border border-neutral-200 p-6 rounded-lg">
+                            <h3 className="text-sm font-bold text-black mb-2">The Ontology</h3>
+                            <p className="text-sm text-neutral-500 leading-relaxed">
+                                By linking equipment status from GCSS-Army and personnel records from IPPS-A, I created a live Feasibility Index showing not just if a truck is available, but if a qualified driver is present.
                             </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* SECTION 2: TACTICAL TOOLSET (ARC & CAL-C) */}
-            <section className="max-w-7xl mx-auto p-8 md:p-12 border-t border-neutral-800">
-                <div className="flex items-center gap-4 mb-12">
-                    <div className="w-2 h-2 bg-green-600 animate-pulse"></div>
-                    <h2 className="text-sm text-white font-bold uppercase tracking-widest">
-                        Tactical Toolset (Power BI)
+            {/* SECTION 2: DASHBOARDS */}
+            <section className="max-w-6xl mx-auto px-6 md:px-12 py-12 border-b border-neutral-100">
+                <div className="flex items-start gap-3 mb-8">
+                    <div className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></div>
+                    <h2 className="text-lg font-normal text-black">
+                        Power BI Dashboards
                     </h2>
                 </div>
 
-                {/* NEW DASHBOARD VIEWER COMPONENT */}
                 <DashboardViewer dashboards={DASHBOARDS} />
-
             </section>
 
-            {/* SECTION 3: DEPLOYMENT HISTORY */}
-            <section className="max-w-7xl mx-auto p-8 md:p-12 border-t border-neutral-800 mb-24">
-                <div className="flex items-center gap-4 mb-12">
-                    <div className="w-2 h-2 bg-neutral-800"></div>
-                    <h2 className="text-sm text-white font-bold uppercase tracking-widest">
-                        MILITARY TIMELINE
+            {/* SECTION 3: TIMELINE */}
+            <section className="max-w-6xl mx-auto px-6 md:px-12 py-12 mb-12">
+                <div className="flex items-start gap-3 mb-8">
+                    <div className="w-1.5 h-1.5 bg-black rounded-full mt-2 shrink-0"></div>
+                    <h2 className="text-lg font-normal text-black">
+                        Military Timeline
                     </h2>
                 </div>
 
-                <div className="border-l border-neutral-800 ml-3 space-y-12">
-
-                    {/* ROLE 1 */}
+                <div className="border-l border-neutral-200 ml-1 space-y-10">
                     <div className="pl-8 relative">
-                        <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-black border border-neutral-600 rounded-full"></div>
+                        <div className="absolute -left-[4px] top-2 w-2 h-2 bg-white border border-black rounded-full"></div>
                         <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                            <h4 className="text-white font-bold">Battalion Staff Officer (SPO/S3)</h4>
-                            <span className="text-[10px] font-mono text-neutral-600">13TH CSSB // 2025 - PRESENT</span>
+                            <h4 className="text-black">Battalion Staff Officer (SPO/S3)</h4>
+                            <span className="text-sm text-neutral-400">13th CSSB &middot; 2025 &ndash; Present</span>
                         </div>
-                        <p className="text-xs text-neutral-500 max-w-2xl">
-                            Responsible for Land & Ammunition operations. Architected the unit's transition to Palantir Vantage.
+                        <p className="text-sm text-neutral-500 max-w-2xl">
+                            Responsible for Land &amp; Ammunition operations. Architected the unit&apos;s transition to Palantir Vantage.
                         </p>
                     </div>
 
-                    {/* ROLE 2 */}
                     <div className="pl-8 relative">
-                        <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-black border border-neutral-600 rounded-full"></div>
+                        <div className="absolute -left-[4px] top-2 w-2 h-2 bg-white border border-neutral-300 rounded-full"></div>
                         <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                            <h4 className="text-white font-bold">Platoon Leader / Executive Officer</h4>
-                            <span className="text-[10px] font-mono text-neutral-600">VARIOUS UNITS // 2022 - 2025</span>
+                            <h4 className="text-black">Platoon Leader / Executive Officer</h4>
+                            <span className="text-sm text-neutral-400">Various Units &middot; 2022 &ndash; 2025</span>
                         </div>
-                        <p className="text-xs text-neutral-500 max-w-2xl">
-                            Direct leadership of logistics formations. Developed my first Power BI tools to solve immediate friction points in field environments.
+                        <p className="text-sm text-neutral-500 max-w-2xl">
+                            Direct leadership of logistics formations. Developed my first Power BI tools to solve immediate friction in field environments.
                         </p>
                     </div>
-
                 </div>
             </section>
         </div>
