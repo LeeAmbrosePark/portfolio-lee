@@ -9,12 +9,8 @@ const nextConfig: NextConfig = {
           destination: "https://park-finance.vercel.app/",
         },
         {
-          source: "/finance/",
-          destination: "https://park-finance.vercel.app/",
-        },
-        {
-          source: "/finance/:path*",
-          destination: "https://park-finance.vercel.app/:path*",
+          source: "/finance/:path+",
+          destination: "https://park-finance.vercel.app/:path+",
         },
       ],
     };
