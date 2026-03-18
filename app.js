@@ -1,13 +1,13 @@
 /* ==========================================================================
    Lee Ambrose Park — Portfolio JS
-   All state is kept in memory variables only.
+   Default: dark mode. Toggle with sun/moon.
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  // --- State (in-memory only) ---
-  let isDarkMode = false;
+  // --- State — defaults to dark (set in HTML data-theme="dark") ---
+  let isDarkMode = true;
 
   // --- Initialize ---
   document.addEventListener('DOMContentLoaded', function () {
@@ -16,29 +16,42 @@
     initMobileNav();
     initScrollRevealFallback();
     initSmoothScroll();
+    updateThemeIcons();
   });
+
+  // --- Update sun/moon icon visibility ---
+  function updateThemeIcons() {
+    var sun = document.querySelector('.theme-icon-sun');
+    var moon = document.querySelector('.theme-icon-moon');
+    if (sun && moon) {
+      // In dark mode, show sun (click to go light); in light mode, show moon (click to go dark)
+      sun.style.display = isDarkMode ? '' : 'none';
+      moon.style.display = isDarkMode ? 'none' : '';
+    }
+  }
 
   // --- Dark Mode Toggle ---
   function initThemeToggle() {
-    const btn = document.querySelector('.nav__toggle-theme');
+    var btn = document.querySelector('.nav__toggle-theme');
     if (!btn) return;
 
     btn.addEventListener('click', function () {
       isDarkMode = !isDarkMode;
       document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : '');
+      updateThemeIcons();
     });
   }
 
   // --- Navbar Scroll Behavior ---
   function initNavScroll() {
-    const nav = document.querySelector('.nav');
+    var nav = document.querySelector('.nav');
     if (!nav) return;
 
-    let lastScrollY = 0;
-    let ticking = false;
+    var lastScrollY = 0;
+    var ticking = false;
 
     function onScroll() {
-      const currentScrollY = window.scrollY;
+      var currentScrollY = window.scrollY;
 
       if (currentScrollY > 60) {
         nav.classList.add('nav--scrolled');
@@ -67,13 +80,13 @@
 
   // --- Mobile Nav ---
   function initMobileNav() {
-    const toggle = document.querySelector('.nav__mobile-toggle');
-    const links = document.querySelector('.nav__links');
+    var toggle = document.querySelector('.nav__mobile-toggle');
+    var links = document.querySelector('.nav__links');
 
     if (!toggle || !links) return;
 
     toggle.addEventListener('click', function () {
-      const isOpen = links.classList.toggle('open');
+      var isOpen = links.classList.toggle('open');
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
@@ -92,10 +105,10 @@
       return; // Native support — CSS handles it
     }
 
-    const elements = document.querySelectorAll('.fade-in');
+    var elements = document.querySelectorAll('.fade-in');
     if (!elements.length) return;
 
-    const observer = new IntersectionObserver(function (entries) {
+    var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
@@ -113,13 +126,13 @@
   function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
-        const target = document.querySelector(this.getAttribute('href'));
+        var target = document.querySelector(this.getAttribute('href'));
         if (target) {
           e.preventDefault();
-          const navHeight = document.querySelector('.nav')
+          var navHeight = document.querySelector('.nav')
             ? document.querySelector('.nav').offsetHeight
             : 0;
-          const y = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+          var y = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
           window.scrollTo({ top: y, behavior: 'smooth' });
         }
       });
