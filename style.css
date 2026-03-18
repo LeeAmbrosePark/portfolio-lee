@@ -695,14 +695,18 @@ button {
   color: #fff;
 }
 .project-card__platform-icon--powerbi {
-  background: #f2c811;
-  color: #191919;
+  background: transparent;
 }
 .project-card__platform-icon--palantir {
-  background: #191919;
+  background: transparent;
 }
-[data-theme="dark"] .project-card__platform-icon--palantir {
-  background: #3a3a3a;
+.project-card__platform-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+[data-theme="dark"] .project-card__platform-icon--palantir img {
+  filter: invert(1);
 }
 
 .project-card__title-area {
