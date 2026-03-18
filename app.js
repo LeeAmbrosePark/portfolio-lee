@@ -6,8 +6,8 @@
 (function () {
   'use strict';
 
-  // --- State — defaults to dark (set in HTML data-theme="dark") ---
-  let isDarkMode = true;
+  // --- State — defaults to light mode ---
+  let isDarkMode = false;
 
   // --- Initialize ---
   document.addEventListener('DOMContentLoaded', function () {
