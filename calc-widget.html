@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAL-C: Container Asset Logistics-Calculator</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d0d;--pnl:#1a1a1a;--inp:#111;
+  --bdr:#8b0000;--bdr2:#6b0000;
+  --red:#cc3333;--wh:#fff;--gr:#bbb;--dm:#777;
+  --gn:#2ecc40;--gd:#e8b830;
+  --ft:'Segoe UI',system-ui,-apple-system,sans-serif;
+}
+html{font-size:13px}
+body{background:var(--bg);color:var(--wh);font-family:var(--ft);line-height:1.35;-webkit-font-smoothing:antialiased}
+.cw{max-width:1400px;margin:0 auto;border:2px solid var(--bdr);background:var(--bg);overflow:hidden}
+
+/* Title */
+.tb{display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(180deg,#1e1e1e,#111);border-bottom:2px solid var(--bdr);padding:9px 20px}
+.tb h1{font-size:1.1rem;font-weight:600;letter-spacing:.5px;text-align:center}
+.rb{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:#333;color:var(--wh);border:1px solid #555;padding:4px 14px;border-radius:3px;cursor:pointer;font-size:.82rem;font-family:var(--ft);transition:background .2s}
+.rb:hover{background:#555}
+
+/* Grid */
+.mg{display:grid;grid-template-columns:310px 1fr 330px;min-height:620px}
+
+/* Shared */
+.p{background:var(--pnl);border:1px solid var(--bdr2);padding:8px 10px;margin:4px}
+.lb{color:var(--red);font-size:.72rem;font-weight:600;margin-bottom:3px;display:block}
+.ip,.sl{background:var(--inp);border:1px solid #333;color:var(--wh);padding:4px 6px;font-size:.85rem;border-radius:2px;width:100%;font-family:var(--ft)}
+.sl{cursor:pointer}
+.ip:focus,.sl:focus{outline:none;border-color:var(--red)}
+input[type="number"]{font-variant-numeric:tabular-nums}
+
+/* LEFT */
+.cl{display:flex;flex-direction:column;padding:4px;gap:0}
+.tr{display:grid;grid-template-columns:1.2fr 1fr;gap:0}
+.dr{display:flex;align-items:center;gap:3px}
+.dr input[type="date"]{width:84px;text-align:center;font-size:.76rem;padding:3px 2px}
+.da{color:var(--dm);font-size:.85rem}
+.lr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:4px}
+.lr input{font-size:.76rem;padding:3px 5px}
+.mb{width:100%;height:86px;background:#151a15;border:1px solid #2a2a2a;overflow:hidden}
+.mb svg{width:100%;height:100%}
+.sm{width:64px!important}
+
+/* Cargo */
+.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:2px 5px}
+.ci{display:flex;flex-direction:column}
+.cl2{color:var(--red);font-size:.65rem;font-weight:600;margin-bottom:1px}
+.ci input{width:56px;font-size:.82rem;padding:2px 4px}
+.ci-img{width:56px;height:20px;margin-top:2px;border-radius:1px;border:1px solid rgba(255,255,255,.06)}
+.tt{display:flex;align-items:baseline;justify-content:flex-end;gap:8px;margin-top:5px;padding-top:4px;border-top:1px solid #333}
+.tt .tl{color:var(--gr);font-size:.85rem;font-weight:600}
+.tt .tv{font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* CENTER */
+.cc{display:flex;flex-direction:column;padding:4px;gap:0}
+.sh{text-align:center;font-size:.88rem;font-weight:600;padding:6px;border:1px solid var(--bdr2);background:var(--pnl);margin:4px 4px 0}
+.ss{display:grid;grid-template-columns:1fr 1fr;margin:0 4px}
+.ss span{text-align:center;font-size:.76rem;font-weight:600;padding:5px;border:1px solid var(--bdr2);background:var(--pnl)}
+.ac{display:grid;grid-template-columns:1fr 1fr;margin:0 4px}
+.al,.ar{border:1px solid var(--bdr2);border-top:none;background:var(--pnl);padding:8px}
+.ar{border-left:none}
+
+/* Vehicles */
+.vr{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.vr:last-child{margin-bottom:0}
+.vr input{width:50px;font-size:.85rem;padding:4px 5px}
+.vs{flex:1;height:36px;max-width:160px;display:flex;align-items:center}
+.vs svg{width:100%;height:100%}
+
+/* Forklifts */
+.fr{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.fr input{width:46px;font-size:.85rem;padding:4px 5px}
+.fr svg{width:46px;height:36px}
+.fl{color:#4caf50;font-size:.68rem;font-weight:600;margin-bottom:2px;text-align:right}
+
+/* MHE */
+.mk{text-align:center;padding:6px;border:1px solid var(--bdr2);background:var(--pnl);margin:0 4px}
+.mt{font-size:.76rem;font-weight:600;margin-bottom:4px}
+.mr{display:flex;align-items:center;justify-content:center;gap:8px}
+.ms{text-align:center}
+.mn{font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.mp{font-size:.63rem;color:var(--dm)}
+.dw{width:68px;height:68px}
+
+/* Results */
+.rx{border:1px solid var(--bdr2);background:var(--pnl);margin:4px}
+.rh,.rv{display:grid;grid-template-columns:1fr 1fr 1fr}
+.rh span{padding:5px;text-align:center;font-size:.76rem;font-weight:600;border-bottom:1px solid var(--bdr2)}
+.rv span{padding:8px;text-align:center;font-size:1.3rem;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* Feasibility */
+.fb{margin:4px;padding:10px 14px;border:1px solid var(--bdr2);background:var(--pnl);display:flex;align-items:center;gap:8px;font-size:1rem;font-weight:700}
+.fb.go{color:var(--gn)}.fb.ng{color:#ff4444}
+.fi{font-size:1.3rem;line-height:1}
+
+/* RIGHT */
+.cr{display:flex;flex-direction:column;padding:4px;gap:0}
+.wp{flex:1;overflow-y:auto;max-height:420px}
+.wp h3{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.ws{margin-bottom:8px}
+.ws h4{font-size:.68rem;font-weight:700;text-transform:uppercase;margin-bottom:2px}
+.ws p{font-size:.7rem;color:var(--gr);line-height:1.5}
+.tc{height:200px;position:relative}
+.tct{text-align:center;font-size:.82rem;font-weight:600;margin-bottom:3px}
+.tcw{width:100%;height:170px;position:relative}
+
+@media(max-width:1100px){.mg{grid-template-columns:1fr 1fr}.cr{grid-column:span 2}}
+@media(max-width:700px){.mg{grid-template-columns:1fr}.cr{grid-column:span 1}.tr,.cg{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="cw">
+  <div class="tb">
+    <h1>CAL-C: Container Asset Logistics-Calculator</h1>
+    <button class="rb" onclick="resetAll()">Reset</button>
+  </div>
+  <div class="mg">
+
+    <!-- LEFT -->
+    <div class="cl">
+      <div class="tr">
+        <div class="p">
+          <label class="lb">Mission Timeframe</label>
+          <div class="dr">
+            <input type="date" id="startDate" class="ip" value="2026-05-28">
+            <span class="da">→</span>
+            <input type="date" id="endDate" class="ip" value="2026-06-10">
+          </div>
+        </div>
+        <div class="p">
+          <label class="lb">Work Hours (per day)</label>
+          <select id="workHours" class="sl">
+            <option value="8" selected>8</option>
+            <option value="10">10</option>
+            <option value="12">12</option>
+            <option value="16">16</option>
+            <option value="24">24</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="p">
+        <label class="lb">Origin and Destination</label>
+        <div class="lr">
+          <input type="text" class="ip" placeholder="Origin" value="FOB Alpha" id="originField">
+          <input type="text" class="ip" placeholder="Waypoint" value="">
+          <input type="text" class="ip" placeholder="Destination" value="COP Bravo" id="destField">
+        </div>
+        <div class="mb">
+          <svg viewBox="0 0 300 86" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e2a1e"/><stop offset="100%" stop-color="#121a12"/></linearGradient></defs>
+            <rect width="300" height="86" fill="url(#tg)"/>
+            <path d="M0 68 Q30 53 60 60 Q90 48 120 56 Q150 43 180 53 Q210 46 240 54 Q270 48 300 56" stroke="#2a3a28" fill="none" stroke-width="1"/>
+            <path d="M0 73 Q50 58 100 66 Q150 50 200 60 Q250 53 300 60" stroke="#243424" fill="none" stroke-width="1"/>
+            <line x1="38" y1="40" x2="262" y2="40" stroke="#cc3333" stroke-width="1.5" stroke-dasharray="6,4" opacity=".8"/>
+            <circle cx="38" cy="40" r="5" fill="none" stroke="#cc3333" stroke-width="1.5"/><circle cx="38" cy="40" r="2" fill="#cc3333"/>
+            <rect x="257" y="35" width="10" height="10" fill="none" stroke="#cc3333" stroke-width="1.5"/><rect x="260" y="38" width="4" height="4" fill="#cc3333"/>
+            <text x="38" y="28" fill="#cc3333" font-size="7" text-anchor="middle" font-weight="600" font-family="sans-serif">ORIGIN</text>
+            <text x="262" y="28" fill="#cc3333" font-size="7" text-anchor="middle" font-weight="600" font-family="sans-serif">DEST</text>
+            <text x="150" y="56" fill="#444" font-size="6.5" text-anchor="middle" font-family="sans-serif">Route Distance</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="p">
+        <label class="lb">Hours per Round Trip</label>
+        <input type="number" id="roundTripHrs" class="ip sm" value="4" min="0.5" step="0.5">
+      </div>
+      <div class="p">
+        <label class="lb">Node Processing Factor (Hours per Lift)</label>
+        <input type="number" id="nodeFactor" class="ip sm" value="1" min="0" step="0.5">
+      </div>
+
+      <div class="p" style="flex:1">
+        <div style="text-align:center;font-size:.82rem;font-weight:600;margin-bottom:6px">Supported Unit's Cargo Demands</div>
+        <div class="cg">
+          <div class="ci"><span class="cl2">TRICONs</span><input type="number" class="ip cargo-input" id="tricons" value="250" min="0"><div class="ci-img" style="background:linear-gradient(135deg,#556B2F,#4a5e28)"></div></div>
+          <div class="ci"><span class="cl2">QUADCONs</span><input type="number" class="ip cargo-input" id="quadcons" value="200" min="0"><div class="ci-img" style="background:linear-gradient(135deg,#556B2F,#4a5e28)"></div></div>
+          <div class="ci"><span class="cl2">BICONs</span><input type="number" class="ip cargo-input" id="bicons" value="30" min="0"><div class="ci-img" style="background:linear-gradient(135deg,#6B6B52,#5a5a44)"></div></div>
+          <div class="ci"><span class="cl2">MILVANs</span><input type="number" class="ip cargo-input" id="milvans" value="170" min="0"><div class="ci-img" style="background:linear-gradient(135deg,#808060,#6a6a4a)"></div></div>
+          <div class="ci"><span class="cl2">BOH-12/FP</span><input type="number" class="ip cargo-input" id="boh12fp" value="20" min="0"><div class="ci-img" style="background:linear-gradient(135deg,#8B8B00,#7a7a00)"></div></div>
+          <div class="ci"><span class="cl2">HIPPOs</span><input type="number" class="ip cargo-input" id="hippos" value="0" min="0"><div class="ci-img" style="background:linear-gradient(135deg,#6B6B40,#5a5a30)"></div></div>
+          <div class="ci"><span class="cl2">Fueltank</span><input type="number" class="ip cargo-input" id="fueltank" value="0" min="0"><div class="ci-img" style="background:linear-gradient(135deg,#4a6a3a,#3a5a2a)"></div></div>
+          <div class="ci"><span class="cl2">Pallets (463L)</span><input type="number" class="ip cargo-input" id="pallets463l" value="0" min="0"><div class="ci-img" style="background:#666"></div></div>
+          <div class="ci"><span class="cl2">ISU-90</span><input type="number" class="ip cargo-input" id="isu90" value="0" min="0"><div class="ci-img" style="background:#555"></div></div>
+          <div class="ci"><span class="cl2">Custom Item</span><input type="number" class="ip cargo-input" id="custom" value="0" min="0"><div class="ci-img" style="background:#444"></div></div>
+          <div class="ci"><span class="cl2">20ft Other</span><input type="number" class="ip cargo-input" id="other20ft" value="0" min="0"><div class="ci-img" style="background:#444"></div></div>
+        </div>
+        <div class="tt">
+          <span class="tl">Total TEUs</span>
+          <span class="tv" id="totalTEUs">338.33</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="cc">
+      <div class="sh">Supporting Unit's Supply</div>
+      <div class="ss"><span>Transportation Assets</span><span>Material Handling Equipment</span></div>
+      <div class="ac">
+        <div class="al">
+          <div class="vr">
+            <input type="number" class="ip" id="lineHaul" value="10" min="0">
+            <div class="vs"><svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="6" width="30" height="20" rx="3" fill="#3d3d3d" stroke="#666" stroke-width=".8"/>
+              <rect x="4" y="8" width="14" height="10" rx="1.5" fill="#2a2a2a" stroke="#555" stroke-width=".5"/>
+              <rect x="20" y="10" width="8" height="4" rx="1" fill="#555"/>
+              <rect x="34" y="10" width="52" height="16" rx="1" fill="#383838" stroke="#555" stroke-width=".7"/>
+              <line x1="60" y1="10" x2="60" y2="26" stroke="#444" stroke-width=".5"/>
+              <rect x="88" y="10" width="52" height="16" rx="1" fill="#383838" stroke="#555" stroke-width=".7"/>
+              <line x1="114" y1="10" x2="114" y2="26" stroke="#444" stroke-width=".5"/>
+              <circle cx="12" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="26" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="54" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="66" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="108" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="120" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+            </svg></div>
+          </div>
+          <div class="vr">
+            <input type="number" class="ip" id="pls" value="5" min="0">
+            <div class="vs"><svg viewBox="0 0 160 38" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="10" width="30" height="20" rx="3" fill="#3d3d3d" stroke="#666" stroke-width=".8"/>
+              <rect x="4" y="12" width="14" height="10" rx="1.5" fill="#2a2a2a" stroke="#555" stroke-width=".5"/>
+              <path d="M32 16 L46 9 L46 16" stroke="#777" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+              <rect x="34" y="16" width="60" height="14" rx="1" fill="#383838" stroke="#555" stroke-width=".7"/>
+              <rect x="36" y="4" width="56" height="12" rx="1.5" fill="#556B2F" stroke="#4a5e28" stroke-width=".6"/>
+              <line x1="52" y1="4" x2="52" y2="16" stroke="#4a5e28" stroke-width=".4"/>
+              <line x1="68" y1="4" x2="68" y2="16" stroke="#4a5e28" stroke-width=".4"/>
+              <circle cx="14" cy="32" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="28" cy="32" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="64" cy="32" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="76" cy="32" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="88" cy="32" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+            </svg></div>
+          </div>
+          <div class="vr">
+            <input type="number" class="ip" id="additional" value="5" min="0">
+            <div class="vs"><svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="8" width="26" height="18" rx="3" fill="#3d3d3d" stroke="#666" stroke-width=".8"/>
+              <rect x="4" y="10" width="12" height="8" rx="1.5" fill="#2a2a2a" stroke="#555" stroke-width=".5"/>
+              <rect x="30" y="10" width="46" height="16" rx="1" fill="#383838" stroke="#555" stroke-width=".7"/>
+              <path d="M31 10 Q53 4 75 10" stroke="#555" stroke-width=".8" fill="none"/>
+              <circle cx="10" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="22" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="44" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="56" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+              <circle cx="68" cy="28" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".7"/>
+            </svg></div>
+          </div>
+        </div>
+        <div class="ar">
+          <div class="fr">
+            <svg viewBox="0 0 48 38" xmlns="http://www.w3.org/2000/svg">
+              <rect x="14" y="8" width="20" height="18" rx="2" fill="#3d3d3d" stroke="#555" stroke-width=".7"/>
+              <rect x="16" y="10" width="8" height="8" rx="1" fill="#2a2a2a" stroke="#444" stroke-width=".5"/>
+              <rect x="7" y="2" width="3" height="24" rx=".5" fill="#555" stroke="#666" stroke-width=".3"/>
+              <rect x="2" y="26" width="10" height="2.5" rx=".5" fill="#888"/>
+              <rect x="2" y="22" width="10" height="2.5" rx=".5" fill="#888"/>
+              <rect x="34" y="12" width="6" height="14" rx="1" fill="#444"/>
+              <circle cx="20" cy="30" r="3" fill="#1a1a1a" stroke="#555" stroke-width=".6"/>
+              <circle cx="35" cy="30" r="3" fill="#1a1a1a" stroke="#555" stroke-width=".6"/>
+            </svg>
+            <input type="number" class="ip" id="forkliftsTop" value="2" min="0">
+          </div>
+          <div class="fl">Forklifts</div>
+          <div class="fr">
+            <svg viewBox="0 0 48 38" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="6" width="24" height="20" rx="2" fill="#556B2F" stroke="#4a5e28" stroke-width=".7"/>
+              <rect x="12" y="8" width="10" height="8" rx="1" fill="#445522" stroke="#3a4a1a" stroke-width=".5"/>
+              <rect x="5" y="0" width="3" height="26" rx=".5" fill="#555" stroke="#666" stroke-width=".3"/>
+              <rect x="0" y="26" width="10" height="2.5" rx=".5" fill="#888"/>
+              <rect x="0" y="22" width="10" height="2.5" rx=".5" fill="#888"/>
+              <circle cx="16" cy="30" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".6"/>
+              <circle cx="32" cy="30" r="3.5" fill="#1a1a1a" stroke="#555" stroke-width=".6"/>
+            </svg>
+            <input type="number" class="ip" id="forkliftsBottom" value="4" min="0">
+          </div>
+        </div>
+      </div>
+      <div class="mk">
+        <div class="mt">MHE Workload</div>
+        <div class="mr">
+          <div class="ms"><div class="mn" id="mU" style="color:var(--gd)">480</div><div class="mp" id="mUP">(71.64%)</div></div>
+          <div class="dw"><canvas id="donutChart"></canvas></div>
+          <div class="ms"><div class="mn" id="mI" style="color:var(--red)">170</div><div class="mp" id="mIP">(25.37%)</div></div>
+        </div>
+      </div>
+      <div class="rx">
+        <div class="rh"><span>Days Required</span><span>Total Mission Hours</span><span>Per Day Turns</span></div>
+        <div class="rv"><span id="dR">8</span><span id="tH">56.30</span><span id="dT">0.9</span></div>
+      </div>
+      <div class="fb go" id="fB">
+        <span class="fi">✅</span>
+        <span id="fT">GO: Feasible (47.7 hrs slack)</span>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="cr">
+      <div class="p wp">
+        <h3>CAL-C System White Paper: Logistics Estimate</h3>
+        <div id="wC"></div>
+      </div>
+      <div class="p tc">
+        <div class="tct">TEU Throughput by Date</div>
+        <div class="tcw"><canvas id="teuChart"></canvas></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const TEU_F={tricons:1/3,quadcons:.25,bicons:.5,milvans:1,boh12fp:1,hippos:1,fueltank:1,pallets463l:.5,isu90:.5,custom:1,other20ft:1};
+
+const DEF={startDate:'2026-05-28',endDate:'2026-06-10',workHours:'8',roundTripHrs:4,nodeFactor:1,lineHaul:10,pls:5,additional:5,forkliftsTop:2,forkliftsBottom:4,tricons:250,quadcons:200,bicons:30,milvans:170,boh12fp:20,hippos:0,fueltank:0,pallets463l:0,isu90:0,custom:0,other20ft:0};
+
+let dC=null,lC=null;
+
+function g(id){const e=document.getElementById(id);if(!e)return 0;if(e.type==='date')return e.value;if(e.tagName==='SELECT')return+e.value||0;return+e.value||0;}
+
+function calc(){
+  // 1. Total TEUs
+  let totalTEUs=0;
+  for(const[k,f]of Object.entries(TEU_F)) totalTEUs+=g(k)*f;
+  document.getElementById('totalTEUs').textContent=totalTEUs.toFixed(2);
+
+  // 2. Fleet
+  const lh=g('lineHaul'),pl=g('pls'),ad=g('additional');
+  const liftCap=(lh*2)+(pl*1)+(ad*1); // TEU per sortie
+  const exactSorties=liftCap>0?totalTEUs/liftCap:0;
+  const ceilSorties=Math.ceil(exactSorties);
+
+  // 3. Time
+  const rt=g('roundTripHrs'),nf=g('nodeFactor'),wh=g('workHours');
+  const totalMH=exactSorties*(rt+nf);
+  const days=wh>0?Math.ceil(totalMH/wh):0;
+
+  // 4. Per Day Turns = sorties / mission calendar days
+  const sd=new Date(g('startDate')),ed=new Date(g('endDate'));
+  const calDays=Math.max(1,Math.ceil((ed-sd)/864e5));
+  const perDayTurns=calDays>0?exactSorties/calDays:0;
+
+  // 5. Feasibility
+  const availHrs=calDays*wh;
+  const slack=availHrs-totalMH;
+
+  // 6. MHE Workload — container count distribution
+  // Light MHE (10K forklift): TRICONs + QUADCONs + BICONs
+  const lightCount=g('tricons')+g('quadcons')+g('bicons');
+  // Standard MHE: MILVANs
+  const stdCount=g('milvans');
+  // Other: everything else
+  const otherCount=g('boh12fp')+g('hippos')+g('fueltank')+g('pallets463l')+g('isu90')+g('custom')+g('other20ft');
+  const totalCount=lightCount+stdCount+otherCount||1;
+  const lightPct=(lightCount/totalCount*100);
+  const stdPct=(stdCount/totalCount*100);
+
+  // DOM
+  document.getElementById('dR').textContent=days;
+  document.getElementById('tH').textContent=totalMH.toFixed(2);
+  document.getElementById('dT').textContent=perDayTurns.toFixed(1);
+
+  document.getElementById('mU').textContent=lightCount;
+  document.getElementById('mUP').textContent=`(${lightPct.toFixed(2)}%)`;
+  document.getElementById('mI').textContent=stdCount;
+  document.getElementById('mIP').textContent=`(${stdPct.toFixed(2)}%)`;
+
+  const badge=document.getElementById('fB'),ft=document.getElementById('fT');
+  if(slack>=0){badge.className='fb go';badge.querySelector('.fi').textContent='✅';ft.textContent=`GO: Feasible (${slack.toFixed(1)} hrs slack)`;}
+  else{badge.className='fb ng';badge.querySelector('.fi').textContent='❌';ft.textContent=`NO-GO: Not Feasible (${Math.abs(slack).toFixed(1)} hrs deficit)`;}
+
+  updDonut(lightCount,stdCount,otherCount);
+  updLine(totalTEUs,liftCap,days,sd,calDays);
+  updWP({totalTEUs:totalTEUs.toFixed(1),days,lh,pl,ad,liftCap,sorties:ceilSorties,nf,wh,calDays,status:slack>=0?'GO (Feasible)':'NO-GO (Not Feasible)',slack:slack.toFixed(1),perDayTurns:perDayTurns.toFixed(1),totalHrs:totalMH.toFixed(1)});
+}
+
+function updDonut(a,b,c){
+  const ctx=document.getElementById('donutChart').getContext('2d');
+  if(dC){dC.data.datasets[0].data=[a,b,c];dC.update('none');return;}
+  dC=new Chart(ctx,{type:'doughnut',data:{labels:['Light MHE','Standard MHE','Other'],datasets:[{data:[a,b,c],backgroundColor:['#e8b830','#cc3333','#666'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:true,cutout:'55%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#222',titleColor:'#fff',bodyColor:'#ccc',borderColor:'#8b0000',borderWidth:1}},animation:{duration:500}}});
+}
+
+function updLine(total,lift,days,start,calDays){
+  const ctx=document.getElementById('teuChart').getContext('2d');
+  // Spread throughput across calendar days (not just work days)
+  const dailyTP=calDays>0?total/calDays:total;
+  const labels=[],pts=[];
+  let rem=total;
+  const n=calDays+1; // show full mission window + 1 day
+  const mn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for(let d=0;d<=n;d++){
+    const dt=new Date(start);dt.setDate(dt.getDate()+d);
+    labels.push(mn[dt.getMonth()]+' '+dt.getDate());
+    pts.push(Math.max(0,Math.round(rem)));
+    rem-=dailyTP;
+  }
+  if(lC){lC.data.labels=labels;lC.data.datasets[0].data=pts;lC.update('none');return;}
+  lC=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'TEU Count',data:pts,borderColor:'#2ecc40',backgroundColor:'rgba(46,204,64,.08)',fill:true,tension:0,stepped:'before',pointRadius:3,pointBackgroundColor:'#2ecc40',pointBorderColor:'#2ecc40',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{ticks:{color:'#555',font:{size:8},maxRotation:45},grid:{color:'rgba(255,255,255,.03)'}},y:{beginAtZero:true,ticks:{color:'#555',font:{size:8}},grid:{color:'rgba(255,255,255,.03)'},title:{display:true,text:'TEU Count',color:'#555',font:{size:9}}}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#222',titleColor:'#fff',bodyColor:'#ccc',borderColor:'#8b0000',borderWidth:1}},animation:{duration:500}},plugins:[{id:'dl',afterDatasetsDraw(ch){const c=ch.ctx,m=ch.getDatasetMeta(0);c.save();c.font='9px sans-serif';c.fillStyle='#999';c.textAlign='center';const skip=m.data.length>10?2:1;m.data.forEach((p,i)=>{if(i%skip===0||i===m.data.length-1)c.fillText(ch.data.datasets[0].data[i],p.x,p.y-8);});c.restore();}}]});
+}
+
+function updWP(d){
+  document.getElementById('wC').innerHTML=`
+  <div class="ws"><h4>Planning Concept</h4><p>The CAL-C serves as a predictive modeling device designed to determine if a mission is mathematically sound before assets are committed. Success is measured by the unit's ability to move ${d.totalTEUs} TEUs within a planning horizon of ${d.days} days. The tool functions by dividing the total time available into two distinct categories: time spent physically moving on the road and time spent stationary at a terminal or loading site.</p></div>
+  <div class="ws"><h4>Asset Utilization</h4><p>Our current supply of ${d.lh} Line Haul platforms and ${d.pl} PLS creates a single-lift capacity of ${d.liftCap} TEUs. Because the total requirement is ${d.totalTEUs} TEUs, the fleet must complete ${d.sorties} total turns. This mission is therefore a calculation of how many times each individual truck can travel to the destination and return to the origin within the daily time limit. If the fleet size is high but the mission remains incomplete, it indicates that the trucks are spending too much time at a stop and not enough time in motion.</p></div>
+  <div class="ws"><h4>Node Processing and Time Constraints</h4><p>We have factored in ${d.nf} hours of processing time for every lift. This represents the time necessary for the customer to prepare cargo, for material handling equipment to load the platforms, and for crews to properly secure the loads. This loading time is subtracted from the ${d.wh}-hour daily work window. If the loading process takes too long, it prevents the trucks from completing even one full trip per day, causing the mission to extend beyond the requested timeline.</p></div>
+  <div class="ws"><h4>Operational Deduction</h4><p>A mission status of ${d.status} is based on the speed of the cargo flow rather than just the number of trucks available. The fleet requires ${d.totalHrs} total hours to move all cargo across ${d.days} days at ${d.perDayTurns} turns per day. With ${d.calDays} days available in the mission window, ${parseFloat(d.slack)>=0?'there is adequate time':'the timeline is insufficient'} to complete all required movements. To resolve any shortfall in throughput, the commander must either increase the hours worked per day or find ways to speed up the loading and preparation process at the node.</p></div>`;
+}
+
+function resetAll(){for(const[k,v]of Object.entries(DEF)){const e=document.getElementById(k);if(e)e.value=v;}calc();}
+
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('input,select').forEach(e=>{e.addEventListener('input',calc);e.addEventListener('change',calc);});calc();});
+</script>
+</body>
+</html>

@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARC-JBLM — Ammunition & Range Coordinator</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  /* === CSS RESET & CUSTOM PROPERTIES === */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-body: #0d0d0d;
+    --bg-panel: #1a1a1a;
+    --bg-panel-alt: #151515;
+    --bg-card: #111111;
+    --bg-input: #0a0a0a;
+    --border-red: #8b0000;
+    --border-red-bright: #cc0000;
+    --accent-red: #b22222;
+    --accent-red-glow: rgba(178,34,34,0.35);
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #888888;
+    --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Courier New', 'Consolas', monospace;
+    --radius: 3px;
+    --border-width: 1.5px;
+  }
+
+  html { font-size: 14px; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg-body);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === WIDGET CONTAINER === */
+  .arc-widget {
+    max-width: 1200px;
+    margin: 0 auto;
+    border: var(--border-width) solid var(--border-red);
+    background: var(--bg-body);
+    position: relative;
+  }
+
+  /* === TITLE BAR === */
+  .arc-title-bar {
+    background: linear-gradient(180deg, #1a1a1a 0%, #111 100%);
+    border-bottom: var(--border-width) solid var(--border-red);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+  }
+
+  .arc-title-bar::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-red-bright), transparent);
+  }
+
+  .arc-title-icon {
+    width: 28px;
+    height: 28px;
+    opacity: 0.85;
+  }
+
+  .arc-title-text {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    text-align: center;
+  }
+
+  /* === GRID LAYOUT === */
+  .arc-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .arc-row {
+    display: grid;
+    gap: 10px;
+  }
+
+  .arc-row-1 {
+    grid-template-columns: 220px 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  .arc-row-2 {
+    grid-template-columns: 1fr 1.4fr;
+  }
+
+  .arc-row-3 {
+    grid-template-columns: 1fr 1.4fr;
+  }
+
+  /* === PANEL CARD === */
+  .arc-panel {
+    background: var(--bg-panel);
+    border: var(--border-width) solid var(--border-red);
+    border-radius: var(--radius);
+    padding: 14px;
+    position: relative;
+  }
+
+  .arc-panel-header {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(139,0,0,0.3);
+  }
+
+  /* === WEAPON SELECTOR === */
+  .weapon-selector {
+    grid-row: 1 / 3;
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  .weapon-selector .arc-panel-header {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+
+  .weapon-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .weapon-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 6px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    border: 1px solid transparent;
+    background: var(--bg-card);
+  }
+
+  .weapon-item:hover {
+    background: #222;
+    border-color: rgba(139,0,0,0.4);
+  }
+
+  .weapon-item.active {
+    background: #1e1010;
+    border-color: var(--border-red-bright);
+    box-shadow: 0 0 12px var(--accent-red-glow), inset 0 0 8px rgba(139,0,0,0.15);
+  }
+
+  .weapon-radio {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--text-muted);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s;
+  }
+
+  .weapon-item.active .weapon-radio {
+    border-color: var(--border-red-bright);
+  }
+
+  .weapon-item.active .weapon-radio::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border-red-bright);
+  }
+
+  .weapon-icon {
+    width: 72px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .weapon-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: #aaa;
+    opacity: 0.85;
+    transition: fill 0.2s, opacity 0.2s;
+  }
+
+  .weapon-item.active .weapon-icon svg {
+    fill: #ddd;
+    opacity: 1;
+  }
+
+  .weapon-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    line-height: 1.2;
+    min-width: 0;
+  }
+
+  .weapon-label-sub {
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* === INPUT PANEL === */
+  .input-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .input-panel .arc-panel-header {
+    text-align: center;
+    width: 100%;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .input-number {
+    width: 100%;
+    max-width: 160px;
+    padding: 10px 14px;
+    font-size: 1.4rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--text-primary);
+    background: var(--bg-input);
+    border: var(--border-width) solid var(--border-red);
+    border-radius: var(--radius);
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .input-number:focus {
+    border-color: var(--border-red-bright);
+    box-shadow: 0 0 8px var(--accent-red-glow);
+  }
+
+  .slider-container {
+    width: 100%;
+    max-width: 220px;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--border-red), #333);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    border: 2px solid var(--border-red-bright);
+    cursor: pointer;
+    box-shadow: 0 0 6px var(--accent-red-glow);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    border: 2px solid var(--border-red-bright);
+    cursor: pointer;
+    box-shadow: 0 0 6px var(--accent-red-glow);
+  }
+
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+    font-family: var(--font-mono);
+  }
+
+  /* === KPI PANELS (right side) === */
+  .kpi-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .kpi-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 14px;
+  }
+
+  .kpi-card .arc-panel-header {
+    width: 100%;
+    text-align: center;
+  }
+
+  .kpi-value {
+    font-family: var(--font-mono);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    margin: 4px 0;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  .kpi-sub {
+    font-family: var(--font-mono);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+    padding: 6px 16px;
+    background: var(--bg-card);
+    border: 1px solid rgba(139,0,0,0.3);
+    border-radius: var(--radius);
+  }
+
+  /* === RANGES PANEL === */
+  .ranges-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .range-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 6px 0;
+  }
+
+  .range-tag {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-input);
+    border: 1px solid rgba(139,0,0,0.3);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    letter-spacing: 0.04em;
+  }
+
+  /* === CHART PANEL === */
+  .chart-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chart-panel .arc-panel-header {
+    position: relative;
+  }
+
+  .chart-panel .arc-panel-header::after {
+    content: '';
+    display: block;
+    height: 2px;
+    margin-top: 6px;
+    background: linear-gradient(90deg, var(--border-red-bright), transparent);
+    border-radius: 1px;
+  }
+
+  .chart-container {
+    flex: 1;
+    position: relative;
+    min-height: 100px;
+    max-height: 200px;
+  }
+
+  .chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* === DETAIL PANELS (Row 3) === */
+  .detail-panel {
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  .detail-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+
+  .detail-section-title:first-child {
+    margin-top: 0;
+  }
+
+  .detail-list {
+    list-style: none;
+    color: var(--text-secondary);
+  }
+
+  .detail-list li {
+    padding: 1px 0;
+  }
+
+  .detail-list li::before {
+    content: '• ';
+    color: var(--accent-red);
+  }
+
+  .detail-value {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .narrative-text {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+
+  .narrative-section {
+    margin-top: 14px;
+  }
+
+  .narrative-section:first-child {
+    margin-top: 0;
+  }
+
+  .narrative-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    .arc-row-1 {
+      grid-template-columns: 1fr;
+    }
+    .weapon-selector {
+      grid-row: auto;
+    }
+    .weapon-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    .arc-row-2,
+    .arc-row-3 {
+      grid-template-columns: 1fr;
+    }
+    .kpi-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .arc-body { padding: 8px; }
+    .kpi-stack {
+      grid-template-columns: 1fr;
+    }
+    .kpi-value { font-size: 2rem; }
+    .weapon-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="arc-widget">
+  <!-- TITLE BAR -->
+  <div class="arc-title-bar">
+    <svg class="arc-title-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="14" stroke="#8b0000" stroke-width="2"/>
+      <circle cx="16" cy="16" r="3" fill="#cc0000"/>
+      <line x1="16" y1="2" x2="16" y2="10" stroke="#8b0000" stroke-width="1.5"/>
+      <line x1="16" y1="22" x2="16" y2="30" stroke="#8b0000" stroke-width="1.5"/>
+      <line x1="2" y1="16" x2="10" y2="16" stroke="#8b0000" stroke-width="1.5"/>
+      <line x1="22" y1="16" x2="30" y2="16" stroke="#8b0000" stroke-width="1.5"/>
+    </svg>
+    <span class="arc-title-text">ARC-JBLM — Ammunition &amp; Range Coordinator</span>
+  </div>
+
+  <div class="arc-body">
+    <!-- ROW 1 -->
+    <div class="arc-row arc-row-1">
+      <!-- Weapon Selector -->
+      <div class="arc-panel weapon-selector">
+        <div class="arc-panel-header">Select Weapon System</div>
+        <ul class="weapon-list" id="weaponList"></ul>
+      </div>
+
+      <!-- Center Column: Input + Ranges stacked -->
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <!-- Input Panel -->
+        <div class="arc-panel input-panel">
+          <div class="arc-panel-header">Enter Number of Individuals</div>
+          <div class="input-group">
+            <input type="number" class="input-number" id="numInput" value="45" min="1" max="200">
+            <div class="slider-container">
+              <input type="range" id="numSlider" min="1" max="200" value="45">
+              <div class="slider-labels"><span>1</span><span>100</span><span>200</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Compatible Ranges -->
+        <div class="arc-panel ranges-panel">
+          <div class="arc-panel-header">Compatible Ranges</div>
+          <div class="range-tags" id="rangeTags"></div>
+        </div>
+      </div>
+
+      <!-- Right Column: KPIs stacked -->
+      <div class="kpi-stack">
+        <div class="arc-panel kpi-card">
+          <div class="arc-panel-header">Total Ammunition Required</div>
+          <div class="kpi-value" id="totalAmmo">5K</div>
+        </div>
+        <div class="arc-panel kpi-card">
+          <div class="arc-panel-header">Recommended DODIC</div>
+          <div class="kpi-value" id="dodicCode" style="font-size:2.2rem;">AB57</div>
+          <div class="kpi-sub" id="dodicName">5.56mm Ball</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="arc-row arc-row-2">
+      <!-- Planning Inputs / Ammo Outputs -->
+      <div class="arc-panel detail-panel">
+        <div class="detail-section-title">Planning Inputs</div>
+        <ul class="detail-list">
+          <li>System: <span class="detail-value" id="detSystem">M4/M4A1 Carbine</span></li>
+          <li>Class: <span class="detail-value" id="detClass">Individual Weapon System</span></li>
+          <li>Density: <span class="detail-value" id="detDensity">45 Soldiers</span></li>
+        </ul>
+        <div class="detail-section-title">Ammunition Outputs</div>
+        <ul class="detail-list">
+          <li>Total Req: <span class="detail-value" id="detTotal">4,590</span></li>
+          <li>DODIC: <span class="detail-value" id="detDodic">AB57</span></li>
+          <li>Table IV: <span class="detail-value" id="detT4">810 Rds</span></li>
+          <li>Table V: <span class="detail-value" id="detT5">1,800 Rds</span></li>
+          <li>Table VI: <span class="detail-value" id="detT6">1,980 Rds</span></li>
+        </ul>
+      </div>
+
+      <!-- Chart Panel -->
+      <div class="arc-panel chart-panel">
+        <div class="arc-panel-header">Zero / Practice / Qualification Rounds Breakdown</div>
+        <div class="chart-container">
+          <canvas id="breakdownChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 3 -->
+    <div class="arc-row arc-row-3">
+      <!-- Narrative -->
+      <div class="arc-panel detail-panel">
+        <div class="narrative-section">
+          <div class="narrative-section-title">Narrative &amp; Site Selection</div>
+          <p class="narrative-text" id="narrativeText"></p>
+        </div>
+      </div>
+
+      <!-- Regulatory Compliance -->
+      <div class="arc-panel detail-panel">
+        <div class="narrative-section">
+          <div class="narrative-section-title">Regulatory Compliance</div>
+          <p class="narrative-text">All ammunition requests must be verified by Unit/Installation SMEs. Coordinate with the JBLM Ammo Manager or Range Scheduling prior to final submission. Training must adhere to Unit SOPs and AR 350-1.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// === DATA MODEL ===
+const WEAPONS = [
+  {
+    id: "m4", name: "M4/M4A1 Carbine", class: "Individual Weapon System",
+    caliber: "5.56mm", dodic: "AB57", dodicName: "5.56mm Ball M855A1",
+    tableIV: 18, tableV: 40, tableVI: 44, sdz: "3,437m",
+    ranges: ["RNG 5", "RNG 8", "RNG 14", "RNG 53", "RNG 55"]
+  },
+  {
+    id: "m249", name: "M249 SAW", class: "Automatic Rifle",
+    caliber: "5.56mm", dodic: "AB56", dodicName: "5.56mm Ball M855A1 Linked",
+    tableIV: 30, tableV: 100, tableVI: 200, sdz: "3,437m",
+    ranges: ["RNG 5", "RNG 8", "RNG 14", "RNG 55"]
+  },
+  {
+    id: "m240b", name: "M240B", class: "Machine Gun",
+    caliber: "7.62mm", dodic: "AB86", dodicName: "7.62mm Ball/Tracer M80A1/M62A1",
+    tableIV: 50, tableV: 200, tableVI: 250, sdz: "4,400m",
+    ranges: ["RNG 55", "RNG 53"]
+  },
+  {
+    id: "m17", name: "M17/M18 Pistol", class: "Sidearm",
+    caliber: "9mm", dodic: "AC20", dodicName: "9mm Ball XM1152",
+    tableIV: 24, tableV: 30, tableVI: 30, sdz: "1,829m",
+    ranges: ["RNG 5", "RNG 8", "RNG 14", "RNG 27", "RNG 53"]
+  },
+  {
+    id: "m9", name: "M9 Pistol", class: "Sidearm",
+    caliber: "9mm", dodic: "A363", dodicName: "9mm Ball M882",
+    tableIV: 24, tableV: 30, tableVI: 30, sdz: "1,829m",
+    ranges: ["RNG 5", "RNG 8", "RNG 14", "RNG 27", "RNG 53"]
+  },
+  {
+    id: "m2", name: "M2 .50 Cal HMG", class: "Heavy Machine Gun",
+    caliber: ".50 Cal", dodic: "A557", dodicName: ".50 Cal Ball/Tracer M33/M17",
+    tableIV: 50, tableV: 100, tableVI: 100, sdz: "6,700m",
+    ranges: ["RNG 55"]
+  }
+];
+
+// === WEAPON SVG SILHOUETTES ===
+const WEAPON_SVGS = {
+  m4: `<svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+    <!-- M4 Carbine silhouette -->
+    <path d="M8 22 L18 22 L18 18 L28 16 L92 16 L92 14 L100 14 L100 16 L114 16 L114 18 L100 18 L100 20 L92 20 L92 18 L38 18 L38 22 L44 22 L44 28 L40 32 L36 32 L36 28 L32 28 L32 24 L28 22 L8 22Z" fill="currentColor"/>
+    <path d="M58 18 L58 13 L62 10 L66 13 L66 18" fill="currentColor" opacity="0.7"/>
+    <path d="M38 22 L40 22 L42 28 L38 28Z" fill="currentColor" opacity="0.6"/>
+  </svg>`,
+
+  m249: `<svg viewBox="0 0 120 44" xmlns="http://www.w3.org/2000/svg">
+    <!-- M249 SAW silhouette with bipod -->
+    <path d="M6 24 L16 24 L16 20 L26 18 L90 18 L90 16 L96 14 L104 14 L104 16 L116 16 L116 18 L104 18 L104 20 L96 20 L96 18 L36 20 L36 24 L42 24 L42 28 L38 32 L34 32 L34 28 L30 28 L30 24 L26 24 L6 24Z" fill="currentColor"/>
+    <path d="M56 16 L56 12 L64 12 L64 16" fill="currentColor" opacity="0.8"/>
+    <rect x="70" y="13" width="18" height="5" rx="1" fill="currentColor" opacity="0.6"/>
+    <!-- Bipod -->
+    <path d="M80 20 L74 38 L76 38 L81 22 L86 38 L88 38 L82 20" fill="currentColor" opacity="0.7"/>
+  </svg>`,
+
+  m240b: `<svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg">
+    <!-- M240B Machine Gun on tripod -->
+    <path d="M4 22 L14 22 L14 18 L24 16 L88 16 L88 14 L94 12 L102 12 L102 14 L116 14 L116 16 L102 16 L102 18 L94 18 L94 16 L34 18 L34 22 L40 22 L40 26 L36 30 L32 30 L32 26 L28 26 L28 22 L24 22 L4 22Z" fill="currentColor"/>
+    <path d="M54 14 L54 10 L62 10 L62 14" fill="currentColor" opacity="0.8"/>
+    <rect x="66" y="11" width="20" height="5" rx="1" fill="currentColor" opacity="0.6"/>
+    <!-- Tripod -->
+    <path d="M58 18 L46 42 L48 42 L59 20 L70 42 L72 42 L60 18" fill="currentColor" opacity="0.6"/>
+    <path d="M59 20 L59 42 L61 42 L61 20" fill="currentColor" opacity="0.5"/>
+  </svg>`,
+
+  m17: `<svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
+    <!-- M17 Pistol silhouette -->
+    <path d="M14 20 L60 20 L64 18 L68 18 L68 22 L64 22 L64 24 L58 24 L54 24 L54 26 L44 26 L40 38 L34 42 L28 42 L30 38 L32 26 L22 26 L18 24 L14 22Z" fill="currentColor"/>
+    <path d="M52 18 L52 14 L56 14 L56 18" fill="currentColor" opacity="0.6"/>
+  </svg>`,
+
+  m9: `<svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
+    <!-- M9 Pistol silhouette -->
+    <path d="M12 20 L58 20 L62 18 L66 18 L66 22 L62 22 L62 24 L56 24 L52 24 L52 26 L42 26 L38 38 L32 42 L26 42 L28 38 L30 26 L20 26 L16 24 L12 22Z" fill="currentColor"/>
+    <circle cx="22" cy="21" r="2" fill="#0d0d0d" opacity="0.5"/>
+    <path d="M50 18 L50 14 L54 14 L54 18" fill="currentColor" opacity="0.6"/>
+  </svg>`,
+
+  m2: `<svg viewBox="0 0 120 52" xmlns="http://www.w3.org/2000/svg">
+    <!-- M2 .50 Cal HMG -->
+    <path d="M4 20 L14 20 L14 16 L24 14 L86 14 L86 12 L92 10 L100 10 L100 12 L118 12 L118 14 L100 14 L100 16 L92 16 L92 14 L34 16 L34 20 L38 20 L38 24 L34 28 L30 28 L30 24 L26 24 L26 20 L24 20 L4 20Z" fill="currentColor"/>
+    <rect x="40" y="10" width="12" height="4" rx="1" fill="currentColor" opacity="0.7"/>
+    <rect x="62" y="8" width="22" height="6" rx="1" fill="currentColor" opacity="0.6"/>
+    <!-- Heavy tripod -->
+    <path d="M50 16 L36 46 L40 46 L52 20 L64 46 L68 46 L54 16" fill="currentColor" opacity="0.55"/>
+    <path d="M52 22 L52 46 L54 46 L54 22" fill="currentColor" opacity="0.45"/>
+    <rect x="34" y="44" width="38" height="3" rx="1" fill="currentColor" opacity="0.5"/>
+  </svg>`
+};
+
+// === STATE ===
+let selectedWeapon = WEAPONS[0];
+let numIndividuals = 45;
+let chart = null;
+
+// === DOM REFS ===
+const numInput = document.getElementById('numInput');
+const numSlider = document.getElementById('numSlider');
+const totalAmmoEl = document.getElementById('totalAmmo');
+const dodicCodeEl = document.getElementById('dodicCode');
+const dodicNameEl = document.getElementById('dodicName');
+const rangeTagsEl = document.getElementById('rangeTags');
+const narrativeEl = document.getElementById('narrativeText');
+const detSystem = document.getElementById('detSystem');
+const detClass = document.getElementById('detClass');
+const detDensity = document.getElementById('detDensity');
+const detTotal = document.getElementById('detTotal');
+const detDodic = document.getElementById('detDodic');
+const detT4 = document.getElementById('detT4');
+const detT5 = document.getElementById('detT5');
+const detT6 = document.getElementById('detT6');
+
+// === BUILD WEAPON LIST ===
+function buildWeaponList() {
+  const list = document.getElementById('weaponList');
+  WEAPONS.forEach((w, i) => {
+    const li = document.createElement('li');
+    li.className = 'weapon-item' + (i === 0 ? ' active' : '');
+    li.dataset.id = w.id;
+    li.innerHTML = `
+      <div class="weapon-radio"></div>
+      <div class="weapon-icon">${WEAPON_SVGS[w.id]}</div>
+      <div>
+        <div class="weapon-label">${w.name}</div>
+        <div class="weapon-label-sub">${w.class}</div>
+      </div>
+    `;
+    li.addEventListener('click', () => selectWeapon(w.id));
+    list.appendChild(li);
+  });
+}
+
+// === SELECT WEAPON ===
+function selectWeapon(id) {
+  selectedWeapon = WEAPONS.find(w => w.id === id);
+  document.querySelectorAll('.weapon-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === id);
+  });
+  updateAll();
+}
+
+// === FORMAT NUMBER ===
+function formatAmmo(n) {
+  if (n >= 1000) {
+    return Math.round(n / 1000) + 'K';
+  }
+  return n.toString();
+}
+
+function formatComma(n) {
+  return n.toLocaleString('en-US');
+}
+
+// === UPDATE ALL ===
+function updateAll() {
+  const w = selectedWeapon;
+  const n = numIndividuals;
+  const t4 = w.tableIV * n;
+  const t5 = w.tableV * n;
+  const t6 = w.tableVI * n;
+  const total = t4 + t5 + t6;
+
+  // KPIs
+  totalAmmoEl.textContent = formatAmmo(total);
+  dodicCodeEl.textContent = w.dodic;
+  dodicNameEl.textContent = w.dodicName.split(' ').slice(0, 2).join(' ');
+
+  // Ranges
+  rangeTagsEl.innerHTML = w.ranges.map(r => `<span class="range-tag">${r}</span>`).join('');
+
+  // Detail Panel
+  detSystem.textContent = w.name;
+  detClass.textContent = w.class;
+  detDensity.textContent = n + ' Soldiers';
+  detTotal.textContent = formatComma(total);
+  detDodic.textContent = w.dodic;
+  detT4.textContent = formatComma(t4) + ' Rds';
+  detT5.textContent = formatComma(t5) + ' Rds';
+  detT6.textContent = formatComma(t6) + ' Rds';
+
+  // Narrative
+  narrativeEl.textContent = `Training will be conducted at JBLM to validate ${n} Soldiers on the ${w.name}. Range site selection is based on targetry and SDZ requirements. Authorized sites: ${w.ranges.join(', ')}. These locations are compatible with the ${w.dodic} ballistic profile.`;
+
+  // Chart
+  updateChart(t4, t5, t6);
+}
+
+// === CHART ===
+function initChart() {
+  const ctx = document.getElementById('breakdownChart').getContext('2d');
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Rounds'],
+      datasets: [
+        {
+          label: 'Total_Zero_Rounds',
+          data: [0],
+          backgroundColor: '#cc0000',
+          borderColor: '#cc0000',
+          borderWidth: 0,
+          borderRadius: 2,
+          barPercentage: 0.95,
+          categoryPercentage: 0.95
+        },
+        {
+          label: 'Total_Practice_Rounds',
+          data: [0],
+          backgroundColor: '#555555',
+          borderColor: '#555555',
+          borderWidth: 0,
+          borderRadius: 2,
+          barPercentage: 0.95,
+          categoryPercentage: 0.95
+        },
+        {
+          label: 'Total_Qual_Rounds',
+          data: [0],
+          backgroundColor: '#999999',
+          borderColor: '#999999',
+          borderWidth: 0,
+          borderRadius: 2,
+          barPercentage: 0.95,
+          categoryPercentage: 0.95
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 600, easing: 'easeOutQuart' },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            color: '#cccccc',
+            font: { family: "'Segoe UI', sans-serif", size: 11 },
+            boxWidth: 10,
+            boxHeight: 10,
+            padding: 16,
+            usePointStyle: true,
+            pointStyle: 'circle'
+          }
+        },
+        tooltip: {
+          backgroundColor: '#1a1a1a',
+          titleColor: '#fff',
+          bodyColor: '#ccc',
+          borderColor: '#8b0000',
+          borderWidth: 1,
+          padding: 10,
+          callbacks: {
+            label: function(ctx) {
+              return ctx.dataset.label.replace(/_/g, ' ') + ': ' + ctx.parsed.x.toLocaleString();
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          grid: { color: 'rgba(255,255,255,0.05)', drawBorder: false },
+          ticks: {
+            color: '#888',
+            font: { family: "'Courier New', monospace", size: 11 },
+            callback: function(v) { return v.toLocaleString(); }
+          },
+          border: { display: false }
+        },
+        y: {
+          stacked: true,
+          display: false
+        }
+      }
+    }
+  });
+}
+
+function updateChart(t4, t5, t6) {
+  if (!chart) return;
+  chart.data.datasets[0].data = [t4];
+  chart.data.datasets[1].data = [t5];
+  chart.data.datasets[2].data = [t6];
+  chart.update('active');
+}
+
+// === EVENT LISTENERS ===
+numInput.addEventListener('input', () => {
+  let val = parseInt(numInput.value);
+  if (isNaN(val) || val < 1) val = 1;
+  if (val > 200) val = 200;
+  numIndividuals = val;
+  numSlider.value = val;
+  updateAll();
+});
+
+numSlider.addEventListener('input', () => {
+  numIndividuals = parseInt(numSlider.value);
+  numInput.value = numIndividuals;
+  updateAll();
+});
+
+// === INIT ===
+buildWeaponList();
+initChart();
+updateAll();
+</script>
+
+</body>
+</html>
