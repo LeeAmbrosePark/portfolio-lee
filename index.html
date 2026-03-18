@@ -100,40 +100,35 @@
 <main id="main">
 
   <!-- ================================================================
-       HERO — Name, square photo below, contact button
+       HERO + ABOUT — Combined card
        ================================================================ -->
-  <section class="container hero" aria-label="Profile header">
+  <section id="about" class="container hero" aria-label="Profile header">
     <div class="card">
-      <div class="hero__stack">
-        <h1 class="hero__name">Lee Ambrose Park</h1>
-        <p class="hero__location">United States</p>
-        <button class="hero__contact-btn" aria-expanded="false" onclick="var box = this.nextElementSibling; var open = box.style.display !== 'flex'; box.style.display = open ? 'flex' : 'none'; this.setAttribute('aria-expanded', open);">
-          Contact Info
-        </button>
-        <div class="hero__contact" style="display:none;">
-          <a href="mailto:lee.a.park.mil@army.mil">lee.a.park.mil@army.mil</a>
-          <a href="mailto:lap118@georgetown.edu">lap118@georgetown.edu</a>
-          <a href="mailto:leeambrosepark.work@gmail.com">leeambrosepark.work@gmail.com</a>
+      <div class="hero__combined">
+        <div class="hero__top">
+          <div class="hero__info">
+            <h1 class="hero__name">Lee Ambrose Park</h1>
+            <p class="hero__location">United States</p>
+            <button class="hero__contact-btn" aria-expanded="false" onclick="var box = this.nextElementSibling; var open = box.style.display !== 'flex'; box.style.display = open ? 'flex' : 'none'; this.setAttribute('aria-expanded', open);">
+              Contact Info
+            </button>
+            <div class="hero__contact" style="display:none;">
+              <a href="mailto:lee.a.park.mil@army.mil">lee.a.park.mil@army.mil</a>
+              <a href="mailto:lap118@georgetown.edu">lap118@georgetown.edu</a>
+              <a href="mailto:leeambrosepark.work@gmail.com">leeambrosepark.work@gmail.com</a>
+            </div>
+          </div>
+          <div class="hero__photo-wrap">
+            <img class="hero__photo" src="./assets/official-portrait.jpg" alt="Lee Ambrose Park — Official Portrait in OCP uniform">
+          </div>
         </div>
-        <div class="hero__photo-wrap">
-          <img class="hero__photo" src="./assets/official-portrait.jpg" alt="Lee Ambrose Park — Official Portrait in OCP uniform">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================================================================
-       ABOUT
-       ================================================================ -->
-  <section id="about" class="container section-card fade-in" aria-label="About">
-    <div class="card">
-      <div class="card__body">
-        <div class="section-header">
+        <hr class="divider">
+        <div class="hero__about">
           <h2 class="section-header__title">About</h2>
+          <p class="about__text">
+            Born and raised in California. Worked from age 15-24 through high school and undergrad in restaurants and kitchens as a busser, dishwasher, and cook. Fulfilled my dream of serving as an active duty Army officer. I'll mostly be posting about stuff I'm building, and writing some articles about life, my family, and some work stuff.
+          </p>
         </div>
-        <p class="about__text">
-          Born and raised in California. Worked from age 15-24 through high school and undergrad in restaurants and kitchens as a busser, dishwasher, and cook. Fulfilled my dream of serving as an active duty Army officer. Future plans: spend time with my family, go to the most high-speed colleges, build the most useful systems on the most impactful teams in America.
-        </p>
       </div>
     </div>
   </section>
@@ -171,7 +166,6 @@
               </p>
               <figure class="experience-item__photo">
                 <img src="./assets/Me-in-desert-6.jpg" alt="Lee Ambrose Park at the National Training Center, 2025" loading="lazy" width="780" height="520">
-                <figcaption>NTC Rotation, 2025</figcaption>
               </figure>
             </div>
 
@@ -193,7 +187,6 @@
               </p>
               <figure class="experience-item__photo">
                 <img src="./assets/FSC-Team-7.jpg" alt="864th Forward Support Company team at Joint Base Lewis-McChord" loading="lazy" width="780" height="520">
-                <figcaption>864th FSC, Joint Base Lewis-McChord</figcaption>
               </figure>
             </div>
 
