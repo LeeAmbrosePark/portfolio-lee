@@ -311,15 +311,26 @@ button {
 }
 
 /* ==========================================================================
-   HERO / HEADER — Stacked: name, contact button, square photo
+   HERO / HEADER — Combined hero + about in one card
    ========================================================================== */
 
 .hero {
   margin-top: var(--space-4);
 }
 
-.hero__stack {
+.hero__combined {
   padding: var(--space-6);
+}
+
+.hero__top {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.hero__info {
+  flex: 1;
+  min-width: 0;
 }
 
 .hero__name {
@@ -371,17 +382,23 @@ button {
 }
 
 .hero__photo-wrap {
-  margin-top: var(--space-5);
+  flex-shrink: 0;
 }
 .hero__photo {
-  width: 100%;
-  max-width: 340px;
-  aspect-ratio: 1;
+  width: 160px;
+  height: 160px;
   object-fit: cover;
   object-position: center 20%;
   border-radius: var(--radius);
   border: 1px solid var(--color-divider);
   box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.hero__about {
+  margin-top: 0;
+}
+.hero__about .section-header__title {
+  margin-bottom: var(--space-3);
 }
 
 .btn {
@@ -1019,14 +1036,22 @@ button {
    ========================================================================== */
 
 @media (max-width: 768px) {
-  .hero__stack {
+  .hero__combined {
     padding: var(--space-4);
+  }
+  .hero__top {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .hero__photo-wrap {
+    order: -1;
+  }
+  .hero__photo {
+    width: 120px;
+    height: 120px;
   }
   .hero__name {
     font-size: var(--text-xl);
-  }
-  .hero__photo {
-    max-width: 100%;
   }
   .section-header__title {
     font-size: var(--text-lg);
