@@ -100,23 +100,23 @@
 <main id="main">
 
   <!-- ================================================================
-       HERO — Circular portrait right of info
+       HERO — Name, square photo below, contact button
        ================================================================ -->
   <section class="container hero" aria-label="Profile header">
     <div class="card">
-      <div class="hero__row">
-        <div class="hero__info">
-          <h1 class="hero__name">Lee Ambrose Park</h1>
-          <p class="hero__headline">Active Duty Army | M.P.S. Georgetown University</p>
-          <p class="hero__location">United States</p>
-          <div class="hero__contact">
-            <a href="mailto:lee.a.park.mil">lee.a.park.mil</a>
-            <a href="mailto:lap118@georgetown.edu">lap118@georgetown.edu</a>
-            <a href="mailto:leeambrosepark.work@gmail.com">leeambrosepark.work@gmail.com</a>
-          </div>
+      <div class="hero__stack">
+        <h1 class="hero__name">Lee Ambrose Park</h1>
+        <p class="hero__location">United States</p>
+        <button class="hero__contact-btn" aria-expanded="false" onclick="var box = this.nextElementSibling; var open = box.style.display !== 'flex'; box.style.display = open ? 'flex' : 'none'; this.setAttribute('aria-expanded', open);">
+          Contact Info
+        </button>
+        <div class="hero__contact" style="display:none;">
+          <a href="mailto:lee.a.park.mil@army.mil">lee.a.park.mil@army.mil</a>
+          <a href="mailto:lap118@georgetown.edu">lap118@georgetown.edu</a>
+          <a href="mailto:leeambrosepark.work@gmail.com">leeambrosepark.work@gmail.com</a>
         </div>
-        <div class="hero__avatar-wrap">
-          <img class="hero__avatar" src="./assets/official-portrait.jpg" alt="Lee Ambrose Park — Official Portrait in OCP uniform">
+        <div class="hero__photo-wrap">
+          <img class="hero__photo" src="./assets/official-portrait.jpg" alt="Lee Ambrose Park — Official Portrait in OCP uniform">
         </div>
       </div>
     </div>
@@ -132,7 +132,7 @@
           <h2 class="section-header__title">About</h2>
         </div>
         <p class="about__text">
-          Born and raised in California. Worked full-time in restaurants while in undergrad, with the main intent of commissioning into the U.S. Army. Served 4 years active duty in a variety of locations and units. Completing a Master's in Supply Chain Management at Georgetown University with a 4.0 GPA. Georgetown University Tropaia Award Recipient.
+          Born and raised in California. Worked from age 15-24 through high school and undergrad in restaurants and kitchens as a busser, dishwasher, and cook. Fulfilled my dream of serving as an active duty Army officer. Future plans: spend time with my family, go to the most high-speed colleges, build the most useful systems on the most impactful teams in America.
         </p>
       </div>
     </div>

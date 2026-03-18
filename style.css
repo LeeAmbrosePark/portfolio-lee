@@ -311,23 +311,15 @@ button {
 }
 
 /* ==========================================================================
-   HERO / HEADER — Circular avatar right of info
+   HERO / HEADER — Stacked: name, contact button, square photo
    ========================================================================== */
 
 .hero {
   margin-top: var(--space-4);
 }
 
-.hero__row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  padding: var(--space-8) var(--space-6);
-}
-
-.hero__info {
-  flex: 1;
-  min-width: 0;
+.hero__stack {
+  padding: var(--space-6);
 }
 
 .hero__name {
@@ -336,21 +328,31 @@ button {
   line-height: 1.3;
 }
 
-.hero__headline {
-  font-size: var(--text-base);
-  color: var(--color-text);
-  font-weight: 400;
-  margin-top: var(--space-1);
-}
-
 .hero__location {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
   margin-top: var(--space-1);
 }
 
+.hero__contact-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border-radius: 20px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  background: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-interactive);
+}
+.hero__contact-btn:hover {
+  background: var(--color-primary-hover);
+}
+
 .hero__contact {
-  display: flex;
   flex-direction: column;
   gap: 2px;
   margin-top: var(--space-3);
@@ -368,17 +370,18 @@ button {
   color: var(--color-primary-hover);
 }
 
-.hero__avatar-wrap {
-  flex-shrink: 0;
+.hero__photo-wrap {
+  margin-top: var(--space-5);
 }
-.hero__avatar {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
+.hero__photo {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1;
   object-fit: cover;
   object-position: center 20%;
-  border: 3px solid var(--color-divider);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-divider);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
 .btn {
@@ -1016,21 +1019,14 @@ button {
    ========================================================================== */
 
 @media (max-width: 768px) {
-  .hero__row {
-    flex-direction: column-reverse;
-    text-align: center;
-    padding: var(--space-5) var(--space-4);
-    gap: var(--space-4);
-  }
-  .hero__avatar {
-    width: 110px;
-    height: 110px;
-  }
-  .hero__contact {
-    align-items: center;
+  .hero__stack {
+    padding: var(--space-4);
   }
   .hero__name {
     font-size: var(--text-xl);
+  }
+  .hero__photo {
+    max-width: 100%;
   }
   .section-header__title {
     font-size: var(--text-lg);
