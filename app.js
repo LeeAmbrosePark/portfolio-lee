@@ -9,11 +9,8 @@
   // --- State (in-memory only) ---
   let isDarkMode = false;
 
-  // --- Initialize Lucide icons ---
+  // --- Initialize ---
   document.addEventListener('DOMContentLoaded', function () {
-    if (window.lucide) {
-      lucide.createIcons();
-    }
     initThemeToggle();
     initNavScroll();
     initMobileNav();
@@ -24,29 +21,11 @@
   // --- Dark Mode Toggle ---
   function initThemeToggle() {
     const btn = document.querySelector('.nav__toggle-theme');
-    const lightIcon = document.querySelector('.theme-icon-light');
-    const darkIcon = document.querySelector('.theme-icon-dark');
-
     if (!btn) return;
 
     btn.addEventListener('click', function () {
       isDarkMode = !isDarkMode;
       document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : '');
-
-      if (lightIcon && darkIcon) {
-        lightIcon.style.display = isDarkMode ? 'none' : '';
-        darkIcon.style.display = isDarkMode ? '' : 'none';
-      }
-
-      // Re-create icons since Lucide rendered them
-      if (window.lucide) {
-        lucide.createIcons();
-        // Re-apply visibility after re-creation
-        const newLightIcon = document.querySelector('.theme-icon-light');
-        const newDarkIcon = document.querySelector('.theme-icon-dark');
-        if (newLightIcon) newLightIcon.style.display = isDarkMode ? 'none' : '';
-        if (newDarkIcon) newDarkIcon.style.display = isDarkMode ? '' : 'none';
-      }
     });
   }
 

@@ -27,14 +27,11 @@
 <meta property="og:title" content="Lee Ambrose Park — Portfolio">
 <meta property="og:description" content="Active Duty Army officer, Georgetown University M.P.S. candidate, Palantir developer, and Army logistics innovator.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="./assets/Me-in-desert-6.jpg">
+<meta property="og:image" content="./assets/official-portrait.jpg">
 
 <!-- Font -->
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap" rel="stylesheet">
-
-<!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
 
 <!-- Styles -->
 <link rel="stylesheet" href="./style.css">
@@ -70,14 +67,11 @@
      ==================================================================== -->
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav__inner">
-    <a href="#" class="nav__brand" aria-label="Lee Park — home">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      LP
-    </a>
+    <a href="#" class="nav__brand" aria-label="Lee Park — home">LP</a>
 
     <!-- Mobile toggle -->
     <button class="nav__mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-      <i data-lucide="menu" style="width:20px;height:20px;"></i>
+      &#9776;
     </button>
 
     <ul class="nav__links" role="list">
@@ -85,11 +79,10 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#education">Education</a></li>
-      <li><a href="#certifications">Certifications</a></li>
       <li>
         <button class="nav__toggle-theme" aria-label="Toggle dark mode" title="Toggle dark mode">
-          <i data-lucide="sun" class="theme-icon-light" style="width:18px;height:18px;"></i>
-          <i data-lucide="moon" class="theme-icon-dark" style="width:18px;height:18px;display:none;"></i>
+          <span class="theme-icon-light">A</span>
+          <span class="theme-icon-dark" style="display:none;">A</span>
         </button>
       </li>
     </ul>
@@ -102,57 +95,66 @@
 <main id="main">
 
   <!-- ================================================================
-       HERO
+       HERO — Stacked photos
        ================================================================ -->
   <section class="container hero" aria-label="Profile header">
     <div class="card">
       <div class="hero__banner">
         <img src="./assets/FSC-Team-7.jpg" alt="864th Forward Support Company team photo with unit flag and military vehicles at Joint Base Lewis-McChord" loading="eager">
       </div>
-      <div class="hero__profile">
-        <img class="hero__avatar" src="./assets/Me-in-desert-6.jpg" alt="Lee Ambrose Park in military gear at a desert training site">
+      <div class="hero__portrait">
+        <img src="./assets/official-portrait.jpg" alt="Lee Ambrose Park — Official Portrait in OCP uniform">
       </div>
       <div class="hero__info">
-        <h1 class="hero__name">
-          Lee Ambrose Park
-          <svg class="hero__verified" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </h1>
+        <h1 class="hero__name">Lee Ambrose Park</h1>
         <p class="hero__headline">Active Duty Army | M.P.S. Georgetown University</p>
         <p class="hero__location">United States</p>
-        <p class="hero__connections">219 connections</p>
         <div class="hero__actions">
-          <a href="mailto:leeambrosepark.work@gmail.com" class="btn btn--primary">
-            <i data-lucide="mail" style="width:16px;height:16px;"></i>
-            Contact info
-          </a>
-          <a href="https://www.westmont.edu/westmont-news/alum-pursues-life-purpose-army" target="_blank" rel="noopener noreferrer" class="btn btn--outline">
-            <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-            View Article
-          </a>
+          <a href="mailto:leeambrosepark.work@gmail.com" class="btn btn--primary">Contact info</a>
+          <a href="https://www.montecitojournal.net/2025/07/29/alum-keeps-marching-forward/" target="_blank" rel="noopener noreferrer" class="btn btn--outline">View Article</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ================================================================
-       FEATURED
+       IN THE PRESS
        ================================================================ -->
-  <section class="container section-card fade-in" aria-label="Featured">
+  <section class="container section-card fade-in" aria-label="In the Press">
     <div class="card">
       <div class="card__body">
         <div class="section-header">
-          <i data-lucide="star" class="section-header__icon"></i>
-          <h2 class="section-header__title">Featured</h2>
+          <h2 class="section-header__title">In the Press</h2>
         </div>
-        <a href="https://www.westmont.edu/westmont-news/alum-pursues-life-purpose-army" target="_blank" rel="noopener noreferrer" class="featured-card">
-          <div class="featured-card__icon">
-            <i data-lucide="newspaper" style="width:24px;height:24px;"></i>
-          </div>
-          <div class="featured-card__text">
-            <h3>Alum Keeps Marching Forward — Montecito Journal / Westmont College</h3>
-            <p>Westmont College · westmont.edu</p>
-          </div>
-        </a>
+        <div class="press-grid">
+          <a href="https://www.montecitojournal.net/2025/07/29/alum-keeps-marching-forward/" target="_blank" rel="noopener noreferrer" class="press-card">
+            <div class="press-card__thumb">
+              <img src="./assets/montecito-thumb.jpg" alt="Montecito Journal article photo">
+            </div>
+            <div class="press-card__text">
+              <h3>Alum Keeps Marching Forward</h3>
+              <p>Montecito Journal</p>
+            </div>
+          </a>
+          <a href="https://www.westmont.edu/westmont-news/alum-pursues-life-purpose-army" target="_blank" rel="noopener noreferrer" class="press-card">
+            <div class="press-card__thumb">
+              <img src="./assets/westmont-article-thumb.jpg" alt="Westmont College article thumbnail">
+            </div>
+            <div class="press-card__text">
+              <h3>Alum Pursues Life of Purpose with Army</h3>
+              <p>Westmont College</p>
+            </div>
+          </a>
+          <a href="https://www.facebook.com/UCSBROTC/posts/congratulations-to-second-lieutenant-lee-park-on-graduating-from-westmont-colleg/2096263543867068/" target="_blank" rel="noopener noreferrer" class="press-card">
+            <div class="press-card__thumb">
+              <img src="./assets/westmont-article-military.jpg" alt="UCSB ROTC commissioning photo">
+            </div>
+            <div class="press-card__text">
+              <h3>Congratulations to Second Lieutenant Lee Park</h3>
+              <p>UCSB ROTC</p>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -164,11 +166,10 @@
     <div class="card">
       <div class="card__body">
         <div class="section-header">
-          <i data-lucide="user" class="section-header__icon"></i>
           <h2 class="section-header__title">About</h2>
         </div>
         <p class="about__text">
-          Lee Park '22 commissioned as a second lieutenant after graduating from Westmont College. He participated in Army ROTC through UC Santa Barbara's Surfrider Battalion while working full-time at downtown restaurants. He led a Forward Support Company's Maintenance Platoon supporting U.S. Central Command and the U.S. Indo-Pacific Command, then served as the company's Executive Officer. Currently serving in Sustainment operations at America's First Corps (I Corps). Completing a Master's in Supply Chain Management at Georgetown University with a 4.0 GPA. Georgetown University Tropaia Award recipient (Valedictorian equivalent, 1/250).
+          Born and raised in California. Worked full-time in restaurants while in undergrad, with the main intent of commissioning into the U.S. Army. Served 4 years active duty in a variety of locations and units. Completing a Master's in Supply Chain Management at Georgetown University with a 4.0 GPA. Georgetown University Tropaia Award Recipient.
         </p>
       </div>
     </div>
@@ -181,44 +182,36 @@
     <div class="card">
       <div class="card__body">
         <div class="section-header">
-          <i data-lucide="briefcase" class="section-header__icon"></i>
           <h2 class="section-header__title">Experience</h2>
         </div>
-
-        <!-- I Corps -->
-        <div class="experience-single">
-          <div class="experience-single__logo" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="experience-single__content">
-            <h3 class="experience-single__title">Sustainment — America's First Corps (I Corps)</h3>
-            <p class="experience-single__org">13th Combat Sustainment Support Battalion</p>
-            <p class="experience-single__meta">Full-time · Dec 2024 – Present · Washington, United States · On-site</p>
-            <p class="experience-single__description">
-              SPO-Transportation operations at the 13th Combat Sustainment Support Battalion. This is where I transitioned to staff work and could focus on building analytics platforms on Palantir Vantage — writing PySpark transforms, building ontologies, and deploying dashboards for the battalion commander and the 593rd ESC DCO.
-            </p>
-            <figure class="experience-single__photo">
-              <img src="./assets/Me-in-desert-6.jpg" alt="Lee Ambrose Park at the National Training Center, 2025" loading="lazy" width="780" height="520">
-              <figcaption>NTC Rotation, 2025</figcaption>
-            </figure>
-          </div>
-        </div>
-
-        <hr class="divider">
 
         <!-- US Army (grouped) -->
         <div class="experience-group">
           <div class="experience-group__header">
             <div class="experience-group__logo" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <img src="./assets/dow-seal.png" alt="Department of War seal">
             </div>
             <div class="experience-group__org">
-              <h3>US Army</h3>
-              <p>Full-time · 2 yrs 8 mos · On-site</p>
+              <h3>U.S. Army</h3>
+              <p>Full-time</p>
             </div>
           </div>
 
           <div class="experience-positions">
+
+            <!-- 13CSSB -->
+            <div class="experience-item">
+              <h4 class="experience-item__title">Sustainment — America's First Corps (I Corps)</h4>
+              <p class="experience-item__duration">13th Combat Sustainment Support Battalion · Dec 2024 – Present</p>
+              <p class="experience-item__description">
+                SPO-Ammunition and SPO-Transportation billet at the 13th Combat Sustainment Support Battalion. After working in a Forward Support Company for a couple years, I transitioned to staff work and started building things I love, using Palantir Vantage and the Microsoft Power Platform. Self-taught through PySpark, DAX, and python transforms, building tools for the Army that reminded me of the projects I worked on with my older brother as a kid. Deployed dashboards for my leadership.
+              </p>
+              <figure class="experience-item__photo">
+                <img src="./assets/Me-in-desert-6.jpg" alt="Lee Ambrose Park at the National Training Center, 2025" loading="lazy" width="780" height="520">
+                <figcaption>NTC Rotation, 2025</figcaption>
+              </figure>
+            </div>
+
             <!-- XO -->
             <div class="experience-item">
               <h4 class="experience-item__title">Forward Support Company Executive Officer</h4>
@@ -240,6 +233,7 @@
                 <figcaption>864th FSC, Joint Base Lewis-McChord</figcaption>
               </figure>
             </div>
+
           </div>
         </div>
 
@@ -248,7 +242,7 @@
         <!-- Cadet -->
         <div class="experience-single">
           <div class="experience-single__logo" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/></svg>
+            <img src="./assets/dow-seal.png" alt="Department of War seal">
           </div>
           <div class="experience-single__content">
             <h3 class="experience-single__title">Cadet</h3>
@@ -271,7 +265,6 @@
     <div class="card">
       <div class="card__body">
         <div class="section-header">
-          <i data-lucide="folder-kanban" class="section-header__icon"></i>
           <h2 class="section-header__title">Projects</h2>
         </div>
 
@@ -283,20 +276,16 @@
               <h3 class="project-card__title">ARC — Ammunition &amp; Range Coordinator</h3>
               <p class="project-card__platform">Microsoft Power BI &rarr; Rebuilt as Interactive Web App</p>
             </div>
-            <span class="project-card__badge project-card__badge--deployed">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
-              Deployed
-            </span>
+            <span class="project-card__badge project-card__badge--deployed">Deployed</span>
           </div>
           <p class="project-card__description">
             Interactive ammunition calculator for Joint Base Lewis-McChord. Select a weapon system and enter soldier count to compute STRAC-based ammo requirements across Tables IV&ndash;VI (zero, practice, qualification). Automatically resolves DODICs, compatible JBLM ranges, and SDZ requirements. Finalist (35/100) in the Department of the Army's Power BI Showcase (January 2026).
           </p>
           <button class="project-card__demo-toggle" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'); const f = this.nextElementSibling; f.style.display = f.style.display === 'none' ? 'block' : 'none'; this.querySelector('.toggle-text').textContent = f.style.display === 'none' ? 'Launch Interactive Demo' : 'Close Demo';">
-            <i data-lucide="play" style="width:16px;height:16px;"></i>
             <span class="toggle-text">Launch Interactive Demo</span>
           </button>
           <div class="project-card__demo" style="display:none;">
-            <iframe src="./arc-widget.html" title="ARC Interactive Demo" loading="lazy" sandbox="allow-scripts" style="width:100%;height:720px;border:2px solid #8b0000;border-radius:8px;background:#0d0d0d;"></iframe>
+            <iframe src="./arc-widget.html" title="ARC Interactive Demo" loading="lazy" sandbox="allow-scripts" style="width:100%;height:720px;border:2px solid var(--color-primary);border-radius:8px;background:#0d0d0d;"></iframe>
           </div>
           <div class="project-card__tags">
             <span class="project-card__tag">Power BI</span>
@@ -315,20 +304,16 @@
               <h3 class="project-card__title">CAL-C — Container Asset Logistics Calculator</h3>
               <p class="project-card__platform">Microsoft Power BI &rarr; Rebuilt as Interactive Web App</p>
             </div>
-            <span class="project-card__badge project-card__badge--deployed">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
-              Deployed
-            </span>
+            <span class="project-card__badge project-card__badge--deployed">Deployed</span>
           </div>
           <p class="project-card__description">
             Predictive logistics modeling tool that determines if a container movement mission is mathematically feasible. Input cargo demands (TRICONs, QUADCONs, BICONs, MILVANs), transportation assets, and mission timeframe to compute total TEUs, required sorties, daily throughput, and a GO/NO-GO feasibility assessment with slack analysis.
           </p>
           <button class="project-card__demo-toggle" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'); const f = this.nextElementSibling; f.style.display = f.style.display === 'none' ? 'block' : 'none'; this.querySelector('.toggle-text').textContent = f.style.display === 'none' ? 'Launch Interactive Demo' : 'Close Demo';">
-            <i data-lucide="play" style="width:16px;height:16px;"></i>
             <span class="toggle-text">Launch Interactive Demo</span>
           </button>
           <div class="project-card__demo" style="display:none;">
-            <iframe src="./calc-widget.html" title="CAL-C Interactive Demo" loading="lazy" sandbox="allow-scripts" style="width:100%;height:720px;border:2px solid #8b0000;border-radius:8px;background:#0d0d0d;"></iframe>
+            <iframe src="./calc-widget.html" title="CAL-C Interactive Demo" loading="lazy" sandbox="allow-scripts" style="width:100%;height:720px;border:2px solid var(--color-primary);border-radius:8px;background:#0d0d0d;"></iframe>
           </div>
           <div class="project-card__tags">
             <span class="project-card__tag">Power BI</span>
@@ -339,45 +324,23 @@
           </div>
         </div>
 
-        <!-- TMR -->
-        <div class="project-card">
-          <div class="project-card__header">
-            <div class="project-card__platform-icon project-card__platform-icon--powerbi" aria-hidden="true">PBI</div>
-            <div class="project-card__title-area">
-              <h3 class="project-card__title">TMR Dashboard</h3>
-              <p class="project-card__platform">Microsoft Power BI</p>
-            </div>
-          </div>
-          <p class="project-card__description">
-            Transportation Movement Request tracking dashboard for convoy and logistics movement operations. Provides real-time visibility into movement status, vehicle allocation, and route planning.
-          </p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Power BI</span>
-            <span class="project-card__tag">Transportation Logistics</span>
-            <span class="project-card__tag">Dashboard</span>
-          </div>
-        </div>
-
-        <!-- CULT (star project with code) -->
+        <!-- CULT -->
         <div class="project-card">
           <div class="project-card__header">
             <div class="project-card__platform-icon project-card__platform-icon--palantir" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
             </div>
             <div class="project-card__title-area">
-              <h3 class="project-card__title">CULT — Capability and Unit Loadout Tracker</h3>
+              <h3 class="project-card__title">CULT — Common User Land Transportation</h3>
               <p class="project-card__platform">Palantir Foundry / Vantage</p>
             </div>
-            <span class="project-card__badge project-card__badge--production">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
-              Production
-            </span>
+            <span class="project-card__badge project-card__badge--production">Production</span>
           </div>
           <p class="project-card__description">
-            Built from scratch on Palantir Foundry with an 8-stage data pipeline. Ingests GCSS-Army and IPPS-A data through PySpark transforms, creates an ontology with Soldier, Equipment, Unit, and SoldierEquipmentQualification objects, and powers a React/TypeScript dashboard. Includes the LEE AIP Bot — a custom AI assistant for querying unit readiness data in natural language. Selected as the sole logistics officer to build and present this to the 593rd ESC DCO (Colonel, O-6). Started August 2025.
+            Built from scratch on Palantir Foundry with an 8-stage data pipeline. Ingests GCSS-Army and IPPS-A data through PySpark transforms, creates an ontology with Soldier, Equipment, Unit, and SoldierEquipmentQualification objects, and powers a React/TypeScript dashboard. Includes the LEE AIP Bot — a custom AI assistant for querying unit readiness data in natural language. Started August 2025.
           </p>
 
-          <!-- PySpark Code Snippet -->
+          <!-- PySpark Code Snippets -->
           <div class="project-card__code">
             <div class="project-card__code-header">
               <div class="project-card__code-dots">
@@ -385,7 +348,9 @@
               </div>
               <span>soldier_equipment_joined.py</span>
             </div>
-            <pre><code><span class="code-decorator">@transform_df</span>(
+            <pre><code><span class="code-comment"># Transform 1: Join soldier records with equipment hand receipts</span>
+<span class="code-comment"># Produces one row per soldier-equipment pairing for readiness tracking</span>
+<span class="code-decorator">@transform_df</span>(
     Output(<span class="code-string">"/SPO-T/datasets/cult/soldier_equipment_joined"</span>),
     soldiers=Input(<span class="code-string">"/SPO-T/datasets/cult/soldiers_cleaned"</span>),
     equipment=Input(<span class="code-string">"/SPO-T/datasets/cult/equipment_status"</span>),
@@ -401,6 +366,67 @@
     )</code></pre>
           </div>
 
+          <div class="project-card__code">
+            <div class="project-card__code-header">
+              <div class="project-card__code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span>data_validation.py</span>
+            </div>
+            <pre><code><span class="code-comment"># Transform 2: Clean and validate incoming GCSS-Army equipment data</span>
+<span class="code-comment"># Standardizes LIN/NSN formats, flags missing serials, deduplicates</span>
+<span class="code-decorator">@transform_df</span>(
+    Output(<span class="code-string">"/SPO-T/datasets/cult/equipment_status"</span>),
+    raw_equip=Input(<span class="code-string">"/SPO-T/datasets/cult/gcss_equipment_raw"</span>),
+)
+<span class="code-keyword">def</span> <span class="code-function">compute</span>(<span class="code-param">raw_equip</span>):
+    <span class="code-keyword">from</span> pyspark.sql <span class="code-keyword">import</span> functions <span class="code-keyword">as</span> F
+
+    cleaned = raw_equip.filter(
+        F.col(<span class="code-string">"lin"</span>).isNotNull() &amp; F.col(<span class="code-string">"nsn"</span>).isNotNull()
+    ).withColumn(
+        <span class="code-string">"lin"</span>, F.upper(F.trim(F.col(<span class="code-string">"lin"</span>)))
+    ).withColumn(
+        <span class="code-string">"nsn"</span>, F.regexp_replace(F.col(<span class="code-string">"nsn"</span>), <span class="code-string">"[^0-9]"</span>, <span class="code-string">""</span>)
+    ).withColumn(
+        <span class="code-string">"has_serial"</span>, F.col(<span class="code-string">"serial_number"</span>).isNotNull()
+    )
+
+    <span class="code-comment"># Deduplicate: keep latest record per LIN + serial</span>
+    <span class="code-keyword">return</span> cleaned.dropDuplicates([<span class="code-string">"lin"</span>, <span class="code-string">"serial_number"</span>])</code></pre>
+          </div>
+
+          <div class="project-card__code">
+            <div class="project-card__code-header">
+              <div class="project-card__code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span>unit_readiness_rollup.py</span>
+            </div>
+            <pre><code><span class="code-comment"># Transform 3: Aggregate readiness metrics per unit</span>
+<span class="code-comment"># Window function ranks units by equipment fill rate</span>
+<span class="code-decorator">@transform_df</span>(
+    Output(<span class="code-string">"/SPO-T/datasets/cult/unit_readiness_rollup"</span>),
+    joined=Input(<span class="code-string">"/SPO-T/datasets/cult/soldier_equipment_joined"</span>),
+)
+<span class="code-keyword">def</span> <span class="code-function">compute</span>(<span class="code-param">joined</span>):
+    <span class="code-keyword">from</span> pyspark.sql <span class="code-keyword">import</span> functions <span class="code-keyword">as</span> F
+    <span class="code-keyword">from</span> pyspark.sql.window <span class="code-keyword">import</span> Window
+
+    unit_stats = joined.groupBy(<span class="code-string">"unit"</span>).agg(
+        F.count(<span class="code-string">"dodid"</span>).alias(<span class="code-string">"total_soldiers"</span>),
+        F.countDistinct(<span class="code-string">"equipment_lin"</span>).alias(<span class="code-string">"unique_lins"</span>),
+        F.avg(F.when(F.col(<span class="code-string">"status"</span>) == <span class="code-string">"FMC"</span>, 1).otherwise(0))
+         .alias(<span class="code-string">"fmc_rate"</span>),
+    )
+
+    <span class="code-comment"># Rank units by FMC (Fully Mission Capable) rate</span>
+    w = Window.orderBy(F.desc(<span class="code-string">"fmc_rate"</span>))
+    <span class="code-keyword">return</span> unit_stats.withColumn(
+        <span class="code-string">"readiness_rank"</span>, F.rank().over(w)
+    )</code></pre>
+          </div>
+
           <div class="project-card__tags">
             <span class="project-card__tag">Palantir Foundry</span>
             <span class="project-card__tag">PySpark</span>
@@ -408,72 +434,6 @@
             <span class="project-card__tag">React</span>
             <span class="project-card__tag">TypeScript</span>
             <span class="project-card__tag">AIP</span>
-          </div>
-        </div>
-
-        <!-- QTB -->
-        <div class="project-card">
-          <div class="project-card__header">
-            <div class="project-card__platform-icon project-card__platform-icon--palantir" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-            </div>
-            <div class="project-card__title-area">
-              <h3 class="project-card__title">QTB Dashboard (Quarterly Training Brief)</h3>
-              <p class="project-card__platform">Palantir Foundry / Vantage</p>
-            </div>
-          </div>
-          <p class="project-card__description">
-            Quarterly Training Brief dashboard for 13CSSB, presented two echelons higher to the 593rd Expeditionary Sustainment Command. Eight dashboard tabs covering Personnel Readiness, Weapons Qualification, Physical Readiness, METL Assessment, Mandatory Training, Training Calendar, and Commander's Scorecard with G/A/R stoplight system. Nine PySpark transforms processing data from GCSS-A, IPPS-A, and CSV uploads for all 7 subordinate companies.
-          </p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Palantir Foundry</span>
-            <span class="project-card__tag">PySpark</span>
-            <span class="project-card__tag">Dashboard</span>
-            <span class="project-card__tag">Training Readiness</span>
-          </div>
-        </div>
-
-        <!-- AMMO FORGE -->
-        <div class="project-card">
-          <div class="project-card__header">
-            <div class="project-card__platform-icon project-card__platform-icon--palantir" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-            </div>
-            <div class="project-card__title-area">
-              <h3 class="project-card__title">AMMO FORGE</h3>
-              <p class="project-card__platform">Palantir Foundry / Vantage</p>
-            </div>
-          </div>
-          <p class="project-card__description">
-            Ammunition management intelligence platform integrating RFMSS range scheduling with TAMIS ammo forecasting. Six PySpark transforms, four ontology objects, and an AIP "Ammo Advisor" agent for natural-language queries on ammunition burn rates and allocation projections.
-          </p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Palantir Foundry</span>
-            <span class="project-card__tag">PySpark</span>
-            <span class="project-card__tag">AIP</span>
-            <span class="project-card__tag">Ammunition Management</span>
-          </div>
-        </div>
-
-        <!-- LOADMASTER -->
-        <div class="project-card">
-          <div class="project-card__header">
-            <div class="project-card__platform-icon project-card__platform-icon--palantir" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-            </div>
-            <div class="project-card__title-area">
-              <h3 class="project-card__title">LOADMASTER</h3>
-              <p class="project-card__platform">Palantir Foundry / Vantage</p>
-            </div>
-          </div>
-          <p class="project-card__description">
-            Tactical load planning system for M872 semitrailers, M1075 PLS, and M1120 HEMTT. Pulls FMC vehicle status from CULT ontology and runs a bin-packing optimizer matching cargo manifests to available vehicles by weight, dimensions, and hazmat classification.
-          </p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Palantir Foundry</span>
-            <span class="project-card__tag">PySpark</span>
-            <span class="project-card__tag">Optimization</span>
-            <span class="project-card__tag">Transportation</span>
           </div>
         </div>
 
@@ -488,23 +448,19 @@
     <div class="card">
       <div class="card__body">
         <div class="section-header">
-          <i data-lucide="graduation-cap" class="section-header__icon"></i>
           <h2 class="section-header__title">Education</h2>
         </div>
 
         <!-- Georgetown -->
         <div class="education-item">
-          <div class="education-item__logo" aria-hidden="true">GU</div>
+          <div class="education-item__logo" aria-hidden="true">
+            <img src="./assets/georgetown-seal.png" alt="Georgetown University seal">
+          </div>
           <div class="education-item__content">
             <h3>Georgetown University</h3>
             <p>Master's Degree (M.P.S.), Supply Chain Management</p>
             <p>Grade: 4.0</p>
-            <p>Coursework: MPSC-5530: Cost &amp; Financial Analysis</p>
-            <p>Skills: Total Cost of Ownership, AI for Project Management, +4 skills</p>
-            <div class="education-item__award">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 7 7 7 7m12-3a2.5 2.5 0 0 0 0 5H17s0-3 2.5-5M12 13V2"/><path d="M6 9h12l-1.5 8.5a2 2 0 0 1-2 1.5h-5a2 2 0 0 1-2-1.5L6 9z"/></svg>
-              Tropaia Award (Valedictorian Equivalent — 1/250)
-            </div>
+            <div class="education-item__award">Tropaia Award</div>
           </div>
         </div>
 
@@ -512,61 +468,12 @@
 
         <!-- Westmont -->
         <div class="education-item">
-          <div class="education-item__logo" aria-hidden="true">WC</div>
+          <div class="education-item__logo" aria-hidden="true">
+            <img src="./assets/westmont-seal.jpg" alt="Westmont College seal">
+          </div>
           <div class="education-item__content">
             <h3>Westmont College</h3>
             <p>Bachelor of Science (B.S.), Political Science</p>
-            <p>Activities: Capax Dei Society</p>
-            <p>Professors: Jesse Covington, Katherine Bryant, Tom Knecht</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ================================================================
-       CERTIFICATIONS
-       ================================================================ -->
-  <section id="certifications" class="container section-card fade-in" aria-label="Licenses and Certifications">
-    <div class="card">
-      <div class="card__body">
-        <div class="section-header">
-          <i data-lucide="award" class="section-header__icon"></i>
-          <h2 class="section-header__title">Licenses &amp; Certifications</h2>
-        </div>
-
-        <div class="cert-item">
-          <div class="cert-item__icon" aria-hidden="true">
-            <i data-lucide="brain" style="width:20px;height:20px;"></i>
-          </div>
-          <div class="cert-item__content">
-            <h3>Applied Artificial Intelligence</h3>
-            <p>Georgetown University · Issued Jan 2026</p>
-          </div>
-        </div>
-
-        <hr class="divider">
-
-        <div class="cert-item">
-          <div class="cert-item__icon" aria-hidden="true">
-            <i data-lucide="database" style="width:20px;height:20px;"></i>
-          </div>
-          <div class="cert-item__content">
-            <h3>Foundry &amp; AIP Builder Foundations</h3>
-            <p>Palantir Technologies · Issued Jul 2025</p>
-          </div>
-        </div>
-
-        <hr class="divider">
-
-        <div class="cert-item">
-          <div class="cert-item__icon" aria-hidden="true">
-            <i data-lucide="target" style="width:20px;height:20px;"></i>
-          </div>
-          <div class="cert-item__content">
-            <h3>Lean Six Sigma Black Belt (LSSBB)</h3>
-            <p>Professional Certification</p>
           </div>
         </div>
 
@@ -582,23 +489,10 @@
 <footer class="footer">
   <div class="footer__inner">
     <div class="footer__links">
-      <a href="mailto:leeambrosepark.work@gmail.com">
-        <i data-lucide="mail" style="width:16px;height:16px;"></i>
-        leeambrosepark.work@gmail.com
-      </a>
-      <a href="https://www.linkedin.com/in/leeambrosepark" target="_blank" rel="noopener noreferrer">
-        <i data-lucide="linkedin" style="width:16px;height:16px;"></i>
-        LinkedIn
-      </a>
-      <a href="https://www.westmont.edu/westmont-news/alum-pursues-life-purpose-army" target="_blank" rel="noopener noreferrer">
-        <i data-lucide="newspaper" style="width:16px;height:16px;"></i>
-        Westmont Article
-      </a>
+      <a href="mailto:leeambrosepark.work@gmail.com">leeambrosepark.work@gmail.com</a>
+      <a href="https://www.linkedin.com/in/leeambrosepark" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
-    <p class="footer__attribution">
-      <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
-    </p>
-    <p class="footer__copyright">&copy; 2026 Lee Ambrose Park. All rights reserved.</p>
+    <p class="footer__copyright">&copy; 2026 Lee Ambrose Park</p>
   </div>
 </footer>
 
