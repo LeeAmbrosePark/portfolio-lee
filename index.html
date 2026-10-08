@@ -1,312 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--
-   ______                            __
-  / ____/___  ____ ___  ____  __  __/ /____  _____
- / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
-/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
-\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
-                    /_/
-        Created with Perplexity Computer
-        https://www.perplexity.ai/computer
--->
-
-<!-- Perplexity Computer Attribution — SEO Meta Tags -->
-<meta name="generator" content="Perplexity Computer">
-<meta name="author" content="Perplexity Computer">
-<meta property="og:see_also" content="https://www.perplexity.ai/computer">
-<link rel="author" href="https://www.perplexity.ai/computer">
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lee Ambrose Park</title>
-<meta name="description" content="Lee Ambrose Park — Personal site.">
-
-<!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="./favicon.svg">
-
-<!-- Open Graph -->
-<meta property="og:title" content="Lee Ambrose Park">
-<meta property="og:description" content="Lee Ambrose Park — Personal site.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="./assets/official-portrait.jpg">
-
-<!-- Font -->
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap" rel="stylesheet">
-
-<!-- Styles -->
-<link rel="stylesheet" href="./style.css">
-
-<!-- JSON-LD Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Lee Ambrose Park",
-  "url": "https://leeambrosepark.com",
-  "email": "leeambrosepark.work@gmail.com",
-  "alumniOf": [
-    { "@type": "Organization", "name": "Georgetown University" },
-    { "@type": "Organization", "name": "Westmont College" }
-  ],
-  "creator": {
-    "@type": "SoftwareApplication",
-    "name": "Perplexity Computer",
-    "url": "https://www.perplexity.ai/computer"
-  }
-}
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Lee Ambrose Park</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <style>
+    * { box-sizing: border-box; }
+    html { color-scheme: light dark; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 3rem 1.5rem;
+      background: #fafafa;
+      color: #232323;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width: min(100%, 18rem); text-align: center; }
+    img { display: block; width: 100%; height: auto; border-radius: 3px; }
+    h1 { margin: 1.5rem 0 .65rem; font-size: 1.25rem; font-weight: 500; line-height: 1.5; }
+    a { display: inline-block; padding: .5rem; color: inherit; font-size: 1rem; line-height: 1.5; text-underline-offset: .25em; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; border-radius: 2px; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #171717; color: #ededed; }
+    }
+  </style>
 </head>
 <body>
-
-<!-- Skip Link -->
-<a href="#main" class="skip-link">Skip to main content</a>
-
-<!-- ====================================================================
-     NAVIGATION
-     ==================================================================== -->
-<nav class="nav" role="navigation" aria-label="Main navigation">
-  <div class="nav__inner">
-    <a href="#" class="nav__brand" aria-label="Lee Park — home">LP</a>
-
-    <!-- Mobile toggle -->
-    <button class="nav__mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-      &#9776;
-    </button>
-
-    <ul class="nav__links" role="list">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-
-      <li><a href="#education">Education</a></li>
-      <li>
-        <button class="nav__toggle-theme" aria-label="Toggle dark mode" title="Toggle dark mode">
-          <!-- Moon icon (visible in light mode — click to go dark) -->
-          <svg class="theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <!-- Sun icon (visible in dark mode — click to go light) -->
-          <svg class="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        </button>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-<!-- ====================================================================
-     MAIN CONTENT
-     ==================================================================== -->
-<main id="main">
-
-  <!-- ================================================================
-       HERO + ABOUT — Combined card
-       ================================================================ -->
-  <section id="about" class="container hero" aria-label="Profile header">
-    <div class="card">
-      <div class="hero__combined">
-        <div class="hero__top">
-          <div class="hero__info">
-            <h1 class="hero__name">Lee Ambrose Park</h1>
-            <p class="hero__location">United States</p>
-            <button class="hero__contact-btn" aria-expanded="false" onclick="var box = this.nextElementSibling; var open = box.style.display !== 'flex'; box.style.display = open ? 'flex' : 'none'; this.setAttribute('aria-expanded', open);">
-              Contact Info
-            </button>
-            <div class="hero__contact" style="display:none;">
-              <a href="mailto:lee.a.park.mil@army.mil">lee.a.park.mil@army.mil</a>
-              <a href="mailto:lap118@georgetown.edu">lap118@georgetown.edu</a>
-              <a href="mailto:leeambrosepark.work@gmail.com">leeambrosepark.work@gmail.com</a>
-            </div>
-          </div>
-          <div class="hero__photo-wrap">
-            <img class="hero__photo" src="./assets/official-portrait.jpg" alt="Lee Ambrose Park — Official Portrait in OCP uniform">
-          </div>
-        </div>
-        <hr class="divider">
-        <div class="hero__about">
-          <h2 class="section-header__title">About</h2>
-          <p class="about__text">
-            Born and raised in California. Worked from age 15-24 through high school and undergrad in restaurants and kitchens as a busser, dishwasher, and cook. Fulfilled my dream of serving as an active duty Army officer. I'll mostly be posting about stuff I'm building, and writing some articles about life, my family, and some work stuff.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================================================================
-       EXPERIENCE
-       ================================================================ -->
-  <section id="experience" class="container section-card fade-in" aria-label="Experience">
-    <div class="card">
-      <div class="card__body">
-        <div class="section-header">
-          <h2 class="section-header__title">Experience</h2>
-        </div>
-
-        <!-- US Army (grouped) -->
-        <div class="experience-group">
-          <div class="experience-group__header">
-            <div class="experience-group__logo" aria-hidden="true">
-              <img src="./assets/dow-seal.png" alt="Department of War seal">
-            </div>
-            <div class="experience-group__org">
-              <h3>U.S. Army</h3>
-              <p>Full-time</p>
-            </div>
-          </div>
-
-          <div class="experience-positions">
-
-            <!-- 13CSSB -->
-            <div class="experience-item">
-              <h4 class="experience-item__title">Sustainment — America's First Corps (I Corps)</h4>
-              <p class="experience-item__duration">13th Combat Sustainment Support Battalion · Dec 2024 – Present</p>
-              <p class="experience-item__description">
-                SPO-Ammunition and SPO-Transportation billet at the 13th Combat Sustainment Support Battalion. After working in a Forward Support Company for a couple years, I transitioned to staff work and started building things I love, using Palantir Vantage and the Microsoft Power Platform. Self-taught through PySpark, DAX, and python transforms, building tools for the Army that reminded me of the projects I worked on with my older brother as a kid. Deployed dashboards for my leadership.
-              </p>
-              <figure class="experience-item__photo">
-                <img src="./assets/Me-in-desert-6.jpg" alt="Lee Ambrose Park at the National Training Center, 2025" loading="lazy" width="780" height="520">
-              </figure>
-            </div>
-
-            <!-- XO -->
-            <div class="experience-item">
-              <h4 class="experience-item__title">Forward Support Company Executive Officer</h4>
-              <p class="experience-item__duration">Mar 2024 – Dec 2024 · 10 mos</p>
-              <p class="experience-item__description">
-                Oversaw all company operations, maintenance readiness, and personnel actions for 90+ soldiers across quartermaster, transportation, and supply sections.
-              </p>
-            </div>
-
-            <!-- PL -->
-            <div class="experience-item">
-              <h4 class="experience-item__title">Forward Support Company Maintenance Platoon Leader</h4>
-              <p class="experience-item__duration">May 2022 – Mar 2024 · 1 yr 11 mos</p>
-              <p class="experience-item__description">
-                Led the maintenance platoon responsible for a variety of equipment: weapons, ground support equipment, NVGs, generators, and wheeled vehicles. Very operational — managing maintenance bays alongside the Army's best (Warrant Officers), controlling dispatch operations, and performing recovery missions supporting many exercises, rotations, and deployments.
-              </p>
-              <figure class="experience-item__photo">
-                <img src="./assets/FSC-Team-7.jpg" alt="864th Forward Support Company team at Joint Base Lewis-McChord" loading="lazy" width="780" height="520">
-              </figure>
-            </div>
-
-          </div>
-        </div>
-
-        <hr class="divider">
-
-        <!-- Cadet -->
-        <div class="experience-single">
-          <div class="experience-single__logo" aria-hidden="true">
-            <img src="./assets/dow-seal.png" alt="Department of War seal">
-          </div>
-          <div class="experience-single__content">
-            <h3 class="experience-single__title">Cadet</h3>
-            <p class="experience-single__org">United States Army Cadet Command</p>
-            <p class="experience-single__meta">Contract · Sep 2018 – May 2022 · 3 yrs 9 mos · Santa Barbara, California</p>
-            <p class="experience-single__description">
-              Full-ride with cross-campus agreement with UCSB. Commissioned as a Quartermaster.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-
-  <!-- ================================================================
-       EDUCATION
-       ================================================================ -->
-  <section id="education" class="container section-card fade-in" aria-label="Education">
-    <div class="card">
-      <div class="card__body">
-        <div class="section-header">
-          <h2 class="section-header__title">Education</h2>
-        </div>
-
-        <!-- Georgetown -->
-        <div class="education-item">
-          <div class="education-item__logo" aria-hidden="true">
-            <img src="./assets/georgetown-seal.png" alt="Georgetown University seal">
-          </div>
-          <div class="education-item__content">
-            <h3>Georgetown University</h3>
-            <p>Master's Degree (M.P.S.), Supply Chain Management</p>
-            <p>Grade: 4.0</p>
-            <div class="education-item__award">Tropaia Award</div>
-          </div>
-        </div>
-
-        <hr class="divider">
-
-        <!-- Westmont -->
-        <div class="education-item">
-          <div class="education-item__logo" aria-hidden="true">
-            <img src="./assets/westmont-seal.jpg" alt="Westmont College seal">
-          </div>
-          <div class="education-item__content">
-            <h3>Westmont College</h3>
-            <p>Bachelor of Science (B.S.), Political Science</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ================================================================
-       ARTICLES (moved to bottom, lowkey)
-       ================================================================ -->
-  <section class="container section-card fade-in" aria-label="Articles">
-    <div class="card">
-      <div class="card__body">
-        <div class="section-header">
-          <h2 class="section-header__title">Articles</h2>
-        </div>
-        <div class="press-grid">
-          <a href="https://www.montecitojournal.net/2025/07/29/alum-keeps-marching-forward/" target="_blank" rel="noopener noreferrer" class="press-card">
-            <div class="press-card__thumb">
-              <img src="./assets/montecito-thumb.jpg" alt="Montecito Journal article photo">
-            </div>
-            <div class="press-card__text">
-              <h3>Alum Keeps Marching Forward</h3>
-              <p>Montecito Journal</p>
-            </div>
-          </a>
-          <a href="https://www.westmont.edu/westmont-news/alum-pursues-life-purpose-army" target="_blank" rel="noopener noreferrer" class="press-card">
-            <div class="press-card__thumb">
-              <img src="./assets/westmont-article-thumb.jpg" alt="Westmont College article thumbnail">
-            </div>
-            <div class="press-card__text">
-              <h3>Alum Pursues Life of Purpose with Army</h3>
-              <p>Westmont College</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ====================================================================
-     FOOTER
-     ==================================================================== -->
-<footer class="footer">
-  <div class="footer__inner">
-    <div class="footer__links">
-      <a href="mailto:leeambrosepark.work@gmail.com">leeambrosepark.work@gmail.com</a>
-      <a href="https://www.linkedin.com/in/leeambrosepark" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    </div>
-    <p class="footer__copyright">&copy; 2026 Lee Ambrose Park</p>
-  </div>
-</footer>
-
-<!-- ====================================================================
-     SCRIPTS
-     ==================================================================== -->
-<script src="./app.js" defer></script>
-
+  <main>
+    <img src="./assets/official-portrait.jpg" alt="Lee Ambrose Park">
+    <h1>Lee Ambrose Park</h1>
+    <a href="https://www.linkedin.com/in/leepark/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  </main>
 </body>
 </html>
